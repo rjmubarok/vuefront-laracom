@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/**** Start Public Routes ****/
 
-Route::apiResource('category', CategoryController::class);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::get('category', [CategoryController::class, 'index']);
+
+/**** End Public Routes ****/
+
+//Authentic routes
+Route::middleware('auth:sanctum')->group(function () {
+
+    //user routes
+    Route::get('/user', function () {
+        return User::all();
+    });
+    Route::put('/user/{user}', [UserController::class, 'update']);
+
+    //category routes
+    Route::post('category', [CategoryController::class, 'store']);
+});
