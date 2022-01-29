@@ -22,7 +22,7 @@ class CreateSuppliersTable extends Migration
             $table->string('address');
             $table->string('area');
             $table->string('postcode');
-            $table->boolean('is_trashed ')->default(1);
+            $table->boolean('is_trashed')->default(1);
             $table->timestamps();
         });
     }

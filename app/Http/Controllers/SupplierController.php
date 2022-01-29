@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -13,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        return Supplier::all()->toJson();
     }
 
     /**
@@ -34,7 +35,21 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'company_name'=>'required',
+            'supplier_name'=>'required',
+            'supplier_email'=>'required|unique:suppliers,supplier_email,',
+            'supplier_phone'=>'required|unique:suppliers,supplier_phone,',
+            'address'=>'required',
+            'area'=>'required',
+            'postcode'=>'required',
+            
+        ]);
+       
+      Supplier::create($request->all());
+      $message = "Supplier Added Successfully";
+      return response()->json(['message'=>$message],201);
+      
     }
 
     /**
