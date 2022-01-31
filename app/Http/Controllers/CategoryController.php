@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -35,12 +36,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return Category::create([
-            'name' => $request->name,
-            'slug' => $request->slug,
-            'description' => $request->description,
-            'image' => $request->image
+        /**
+         * Fillable fields
+         * 
+         * name (string compulsory)
+         * slug (string compulsory)
+         * description (string nullable)
+         * image (string nullable)
+         * active (binary default 1)
+         * parent_id (nullable)
+         */
+        
+        $request->validate([
+            'name' => 'string',
         ]);
+        
+        $category = Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'description' => $request->description,
+            'image' => $request->image,
+            'parent_id' => $request->parent_id,
+        ]);
+
+        return response($category,201);
     }
 
     /**
@@ -85,6 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response('Successfully Deleted.');
     }
 }

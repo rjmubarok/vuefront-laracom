@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->boolean('active')->default('1');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
