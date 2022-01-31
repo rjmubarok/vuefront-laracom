@@ -28,11 +28,9 @@ Route::get('category', [CategoryController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
 
     //user routes
-    Route::get('/user', function () {
-        return User::all();
-    });
-    Route::put('/user/{user}', [UserController::class, 'update']);
+    Route::get('/user', [UserController::class, 'index'])->middleware('permission:view-user');
+    Route::put('/user/{user}', [UserController::class, 'update'])->middleware('permission:update-user');
 
     //category routes
-    Route::post('category', [CategoryController::class, 'store']);
+    Route::post('category', [CategoryController::class, 'store'])->middleware('permission:add-category');
 });
