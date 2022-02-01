@@ -38,8 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //category routes
     Route::post('/add-category', [CategoryController::class, 'store']);
     // brand route
-   
+    Route::post('/add-brand',[BrandController::class,'store']);
     Route::delete('/remove-brand/{id}',[BrandController::class,'destroy']);
 });
-Route::post('/add-brand',[BrandController::class,'store']);
+
 
