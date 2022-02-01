@@ -6,7 +6,8 @@
 
 require("./bootstrap");
 
-window.Vue = require("vue").default;
+//window.Vue = require("vue").default;
+import Vue from "vue";
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,8 +37,9 @@ Vue.component("blog-post", {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import ExampleComponent from "./components/ExampleComponent";
+import App from "./components/App";
+import Category from "./components/Category";
 const app = new Vue({
     el: "#app",
-    components: { ExampleComponent },
+    components: { App, Category },
 });

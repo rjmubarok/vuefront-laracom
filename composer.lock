@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "0b95b90e943d76e30cceba43951bc2be",
+=======
+    "content-hash": "41b817fac4ba9425a33a98da2f266d44",
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2910,6 +2914,88 @@
             "time": "2021-09-25T23:10:38+00:00"
         },
         {
+            "name": "spatie/laravel-permission",
+            "version": "5.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "6a3ed627cee28a552b5176c172ae0abc5eb30925"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6a3ed627cee28a552b5176c172ae0abc5eb30925",
+                "reference": "6a3ed627cee28a552b5176c172ae0abc5eb30925",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^7.0|^8.0|^9.0",
+                "illuminate/container": "^7.0|^8.0|^9.0",
+                "illuminate/contracts": "^7.0|^8.0|^9.0",
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "php": "^7.3|^8.0|^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "phpunit/phpunit": "^9.4",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-main": "5.x-dev",
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 6.0 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-permission/issues",
+                "source": "https://github.com/spatie/laravel-permission/tree/5.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-11T15:06:21+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.3.0",
             "source": {
@@ -3086,6 +3172,7 @@
         },
         {
             "name": "symfony/css-selector",
+<<<<<<< HEAD
             "version": "v6.0.3",
             "source": {
                 "type": "git",
@@ -3096,6 +3183,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/css-selector/zipball/1955d595c12c111629cc814d3f2a2ff13580508a",
                 "reference": "1955d595c12c111629cc814d3f2a2ff13580508a",
+=======
+            "version": "v5.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "b0a190285cd95cb019237851205b8140ef6e368e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b0a190285cd95cb019237851205b8140ef6e368e",
+                "reference": "b0a190285cd95cb019237851205b8140ef6e368e",
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
                 "shasum": ""
             },
             "require": {
@@ -3131,7 +3230,11 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/css-selector/tree/v6.0.3"
+=======
+                "source": "https://github.com/symfony/css-selector/tree/v5.4.3"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
             },
             "funding": [
                 {
@@ -3147,7 +3250,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-01-02T09:55:41+00:00"
+=======
+            "time": "2022-01-02T09:53:40+00:00"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3289,6 +3396,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
+<<<<<<< HEAD
             "version": "v6.0.3",
             "source": {
                 "type": "git",
@@ -3299,6 +3407,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/6472ea2dd415e925b90ca82be64b8bc6157f3934",
                 "reference": "6472ea2dd415e925b90ca82be64b8bc6157f3934",
+=======
+            "version": "v5.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "dec8a9f58d20df252b9cd89f1c6c1530f747685d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/dec8a9f58d20df252b9cd89f1c6c1530f747685d",
+                "reference": "dec8a9f58d20df252b9cd89f1c6c1530f747685d",
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
                 "shasum": ""
             },
             "require": {
@@ -3352,7 +3472,11 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/event-dispatcher/tree/v6.0.3"
+=======
+                "source": "https://github.com/symfony/event-dispatcher/tree/v5.4.3"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
             },
             "funding": [
                 {
@@ -3368,7 +3492,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-01-02T09:55:41+00:00"
+=======
+            "time": "2022-01-02T09:53:40+00:00"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
         },
         {
             "name": "symfony/event-dispatcher-contracts",
@@ -4833,6 +4961,7 @@
         },
         {
             "name": "symfony/string",
+<<<<<<< HEAD
             "version": "v6.0.3",
             "source": {
                 "type": "git",
@@ -4843,6 +4972,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/string/zipball/522144f0c4c004c80d56fa47e40e17028e2eefc2",
                 "reference": "522144f0c4c004c80d56fa47e40e17028e2eefc2",
+=======
+            "version": "v5.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/string.git",
+                "reference": "92043b7d8383e48104e411bc9434b260dbeb5a10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/string/zipball/92043b7d8383e48104e411bc9434b260dbeb5a10",
+                "reference": "92043b7d8383e48104e411bc9434b260dbeb5a10",
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
                 "shasum": ""
             },
             "require": {
@@ -4898,7 +5039,11 @@
                 "utf8"
             ],
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/string/tree/v6.0.3"
+=======
+                "source": "https://github.com/symfony/string/tree/v5.4.3"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
             },
             "funding": [
                 {
@@ -4914,6 +5059,7 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-01-02T09:55:41+00:00"
         },
         {
@@ -4928,6 +5074,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/translation/zipball/71bb15335798f8c4da110911bcf2d2fead7a430d",
                 "reference": "71bb15335798f8c4da110911bcf2d2fead7a430d",
+=======
+            "time": "2022-01-02T09:53:40+00:00"
+        },
+        {
+            "name": "symfony/translation",
+            "version": "v5.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "a9dd7403232c61e87e27fb306bbcd1627f245d70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/a9dd7403232c61e87e27fb306bbcd1627f245d70",
+                "reference": "a9dd7403232c61e87e27fb306bbcd1627f245d70",
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
                 "shasum": ""
             },
             "require": {
@@ -4993,7 +5155,11 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/translation/tree/v6.0.3"
+=======
+                "source": "https://github.com/symfony/translation/tree/v5.4.3"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
             },
             "funding": [
                 {
@@ -5009,7 +5175,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-01-07T00:29:03+00:00"
+=======
+            "time": "2022-01-07T00:28:17+00:00"
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
         },
         {
             "name": "symfony/translation-contracts",

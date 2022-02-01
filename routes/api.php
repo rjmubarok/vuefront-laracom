@@ -30,12 +30,10 @@ Route::get('/brands', [BrandController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
 
     //user routes
-    Route::get('/user', function () {
-        return User::all();
-    });
-    Route::put('/user/{user}', [UserController::class, 'update']);
+    Route::resource('/user', UserController::class)->middleware('permission:user-crud');
 
     //category routes
+<<<<<<< HEAD
     Route::post('/add-category', [CategoryController::class, 'store']);
     // brand route
     Route::post('/add-brand',[BrandController::class,'store']);
@@ -43,3 +41,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+=======
+    Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
+    Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
+    Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
+});
+>>>>>>> bf63ba8ba432455117095588934d61f03aa71934
