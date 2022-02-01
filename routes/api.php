@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -20,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
-Route::get('category', [CategoryController::class, 'index']);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/brands', [BrandController::class, 'index']);
 
 /**** End Public Routes ****/
 
@@ -34,5 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/{user}', [UserController::class, 'update']);
 
     //category routes
-    Route::post('category', [CategoryController::class, 'store']);
+    Route::post('/add-category', [CategoryController::class, 'store']);
+    // brand route
+   
+    Route::delete('/remove-brand/{id}',[BrandController::class,'destroy']);
 });
+Route::post('/add-brand',[BrandController::class,'store']);
+
