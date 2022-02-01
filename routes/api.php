@@ -28,9 +28,10 @@ Route::get('category', [CategoryController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
 
     //user routes
-    Route::get('/user', [UserController::class, 'index'])->middleware('permission:view-user');
-    Route::put('/user/{user}', [UserController::class, 'update'])->middleware('permission:update-user');
+    Route::resource('/user', UserController::class)->middleware('permission:user-crud');
 
     //category routes
-    Route::post('category', [CategoryController::class, 'store'])->middleware('permission:add-category');
+    Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
+    Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
+    Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
 });

@@ -19,7 +19,8 @@
                 </div>
 
             </div>
-            <Example-component />
+            <App />
+            <Category />
         </div>
     </div>
 </div>
