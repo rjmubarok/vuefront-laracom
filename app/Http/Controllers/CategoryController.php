@@ -36,10 +36,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        
-        return Category::create([
-=======
         /**
          * Fillable fields
          * 
@@ -56,20 +52,14 @@ class CategoryController extends Controller
         ]);
         
         $category = Category::create([
->>>>>>> bf63ba8ba432455117095588934d61f03aa71934
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'description' => $request->description,
             'image' => $request->image,
             'parent_id' => $request->parent_id,
         ]);
-<<<<<<< HEAD
-        $message = "Catewgory added Successfully ";
-        return response()->json(['message',$message],201);
-=======
 
         return response($category,201);
->>>>>>> bf63ba8ba432455117095588934d61f03aa71934
     }
 
     /**
