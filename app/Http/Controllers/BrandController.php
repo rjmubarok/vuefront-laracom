@@ -37,8 +37,6 @@ class BrandController extends Controller
  {
   $request->validate([
    'name'        => 'required',
-   'description' => 'required',
-   'image'       => 'required',
   ]);
   Brand::create([
    'name'        => $request->name,

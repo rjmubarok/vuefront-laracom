@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VandorController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -33,17 +34,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/user', UserController::class)->middleware('permission:user-crud');
 
     //category routes
-<<<<<<< HEAD
     Route::post('/add-category', [CategoryController::class, 'store']);
     // brand route
-    Route::post('/add-brand',[BrandController::class,'store']);
+    
     Route::delete('/remove-brand/{id}',[BrandController::class,'destroy']);
+    Route::post('/add-brand',[BrandController::class,'store']);
+    Route::post('/add-vandor',[VandorController::class,'store']);
+    Route::delete('/remove-vandor/{id}',[BrandController::class,'destroy']);
+
 });
 
 
-=======
-    Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
-    Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
-    Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
-});
->>>>>>> bf63ba8ba432455117095588934d61f03aa71934
