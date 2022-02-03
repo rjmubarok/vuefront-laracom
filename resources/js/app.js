@@ -37,8 +37,6 @@ Vue.component("blog-post", {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import App from "./components/App";
-import Category from "./components/Category";
 const app = new Vue({
     el: "#app",
     components: { App, Category },
