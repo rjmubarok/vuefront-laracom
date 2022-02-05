@@ -18,6 +18,12 @@ Route::view('/', 'home');
 
 Auth::routes();
 
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    });
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category',function(){
     return view('category');
