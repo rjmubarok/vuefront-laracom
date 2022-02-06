@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vandor extends Model
+class Vendor extends Model
 {
     use HasFactory;
     // protected $_fillable = [
     //     'username', 
     //     'email',
-    //     'first_name',
-    //     'last_name',
+    //     'name',
+    // 
     //     'store_name',
-    //     'address_tow',
+    //     'address_two',
     //     'country',
     //     'city',
     //     'state',

@@ -58,5 +58,14 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name'=>'read-product']);
         Permission::create(['name'=>'update-product']);
         Permission::create(['name'=>'delete-product']);
+        // vendor
+        Permission::create(['name'=>'create-vendor']);
+        Permission::create(['name'=>'update-vendor']);
+        Permission::create(['name'=>'delete-vendor']);
+        //order
+        Permission::create(['name'=>'create-order']);
+        Permission::create(['name'=>'update-order']);
+        Permission::create(['name'=>'delete-order']);
+
     }
 }

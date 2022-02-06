@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vandor;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class VandorController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class VandorController extends Controller
      */
     public function index()
     {
-        //
+         return Product:: all();
     }
 
     /**
@@ -35,32 +35,16 @@ class VandorController extends Controller
      */
     public function store(Request $request)
     {
-        Vandor::create([
-        'username'=>$request->username,
-        'email'=>$request->email,
-         'password'=>$request->password,
-        'name'=>$request->name,
-        'store_name'=>$request->store_name,
-        'address_two'=>$request->address_tow,
-        'address_one'=>$request->address_one,
-        'country'=>$request->country,
-        'city'=>$request->city,
-        'state'=>$request->state,
-        'zipecode'=>$request->zipecode,
-        'store_phone'=>$request->store_phone,
-       
-           ]);
-           $message = "Vendor Added Successfully ";
-           return response()->json( $message, 201);
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vandor  $vandor
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Vandor $vandor)
+    public function show(Product $product)
     {
         //
     }
@@ -68,10 +52,10 @@ class VandorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Vandor  $vandor
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vandor $vandor)
+    public function edit(Product $product)
     {
         //
     }
@@ -80,10 +64,10 @@ class VandorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vandor  $vandor
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vandor $vandor)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -91,11 +75,11 @@ class VandorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vandor  $vandor
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vandor $vandor)
+    public function destroy(Product $product)
     {
-        
+        //
     }
 }
