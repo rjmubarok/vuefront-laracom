@@ -2,7 +2,7 @@
     <div class="card card-body">
         <h4>Category</h4>
         <ul :class="{ loading }">
-            <li v-for="category in categories">
+            <li v-for="category in categories" :key="category.id">
                 {{ category.name }}
             </li>
         </ul>

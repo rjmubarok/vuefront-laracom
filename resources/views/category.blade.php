@@ -13,7 +13,6 @@
     <div id="app">
         <Category />
     </div>
-
 </body>
 
 </html>
