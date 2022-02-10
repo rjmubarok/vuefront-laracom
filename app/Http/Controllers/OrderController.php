@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Carbon;
 class OrderController extends Controller
 {
     /**
@@ -36,7 +36,12 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         Order::create([
-            
+            'customer_id'=>$request->customer_id,
+            'shiping_id'=>$request->shiping_id,
+            'supplier_id'=>$request->supplier_id,
+            'payment_id'=>$request->payment_id,
+            "created_at"  => Carbon::now(),
+            "updated_at"  => now(),
         ]);
         $message = "Vendor Added Successfully ";
         return response()->json($message, 201);
@@ -73,7 +78,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        
+        $order->updated([
+            'customer_id'=>$request->customer_id,
+            'shiping_id'=>$request->shiping_id,
+            'supplier_id'=>$request->supplier_id,
+            'payment_id'=>$request->payment_id,
+            "created_at"  => Carbon::now(),
+            "updated_at"  => now(),
+        ]);
+        $message = "Vendor Added Successfully ";
+        return response()->json($message, 201);
     }
 
     /**

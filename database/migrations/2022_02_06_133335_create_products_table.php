@@ -18,11 +18,12 @@ class CreateProductsTable extends Migration
             $table->integer('category_id');
             $table->integer('subcategory_id');
             $table->integer('brand_id');
+            $table->integer('vandor_id')->nullable();
             $table->float('price');
             $table->string('name');
             $table->string('code')->nullable();
             $table->string('slug');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('Image');
             $table->boolean('status');
             $table->Integer('Parent_id')->nullable();
