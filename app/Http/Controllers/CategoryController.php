@@ -70,7 +70,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return Category::find($category);
+        return Category::find($category)->first();
     }
 
     /**
