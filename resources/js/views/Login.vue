@@ -2,12 +2,18 @@
   <div class="mb-5">
     <div class="card card-body m-auto" style="max-width: 400px">
       <h1>Login</h1>
+      <div class="alert alert-danger" v-if="validation">
+        {{ validation }}
+      </div>
+      <div class="alert alert-danger" v-else-if="errorMessage">
+        {{ errorMessage }}
+      </div>
       <div class="mb-3">
         <input
           type="email"
           class="form-control"
           placeholder="Email"
-          v-model="form.username"
+          v-model="form.email"
         />
       </div>
       <div class="mb-3">
@@ -34,20 +40,39 @@ export default {
   data() {
     return {
       form: {
-        username: "",
+        email: "",
         password: "",
       },
+      errorMessage: "",
+      validation: null,
     };
   },
   methods: {
     login() {
       axios
         .post("/api/login", this.form)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          this.$router.push({ name: "Dashboard" });
         })
         .catch((error) => {
-          console.log(error);
+          this.errorMessage = error.response.data.message;
+          this.validation = error.response.data.errors;
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            //console.log(error.response.status);
+            //console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
         });
     },
   },
