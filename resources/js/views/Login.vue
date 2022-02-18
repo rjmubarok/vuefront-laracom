@@ -13,7 +13,7 @@
           type="email"
           class="form-control"
           placeholder="Email"
-          v-model="form.email"
+          v-model="user.email"
         />
       </div>
       <div class="mb-3">
@@ -34,9 +34,15 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Login",
+  computed: {
+    user: {
+      get() {
+        return this.$store.state.currentUser.state.user;
+      },
+    },
+  },
   data() {
     return {
       form: {
