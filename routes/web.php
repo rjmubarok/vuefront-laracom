@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'home');
+Route::get('{any}', function () {
+  return view('web');
+})->where('any','.*');
 
-Auth::routes();
+/* Auth::routes();
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::redirect('/', 'admin/dashboard');
@@ -28,4 +30,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/category',function(){
     return view('category');
-});
+}); */

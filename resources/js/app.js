@@ -1,16 +1,12 @@
 require("./bootstrap");
 import Vue from "vue";
-import Category from "./components/Category";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
 const app = new Vue({
     el: "#app",
-    components: { Category },
+    store,
+    router,
+    components: { App },
 });
-
-/* window.Vue = require("vue").default;
-
-Vue.component("Category", require("./components/Category.vue").default);
-
-const app = new Vue({
-    el: "#app",
-}); */

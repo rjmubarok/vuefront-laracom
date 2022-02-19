@@ -101,7 +101,7 @@ class UserController extends Controller
             'token' => $token
         ];
 
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
     public function register(Request $request)
