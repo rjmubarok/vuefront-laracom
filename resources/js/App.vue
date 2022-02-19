@@ -28,5 +28,23 @@
 <script>
 export default {
   name: "App",
+  computed: {
+    loggedIn: {
+      get() {
+        return this.$store.state.currentUser.loggedIn;
+      },
+    },
+  },
+  methods: {
+    logout() {
+      axios.post("/logout").then((response) => {
+        window.location.href = "login";
+      });
+    },
+  },
+  created() {
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.getItem("login_token");
+  },
 };
 </script>

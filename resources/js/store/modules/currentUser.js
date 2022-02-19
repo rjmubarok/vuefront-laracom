@@ -1,11 +1,23 @@
 const state = {
-    user: {
-        email: "superadmin@email.com",
-    },
+    user: {},
 };
 
 const getters = {};
-const actions = {};
+const actions = {
+    loginUser({}, user) {
+        axios
+            .post("/api/login", {
+                email: user.email,
+                password: user.password,
+            })
+            .then((response) => {
+                if (response.data.token) {
+                    //save the token
+                    localStorage.setItem("login_token", response.data.token);
+                }
+            });
+    },
+};
 const mutations = {};
 
 export default {

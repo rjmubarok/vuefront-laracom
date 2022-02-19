@@ -21,7 +21,7 @@
           type="password"
           class="form-control"
           placeholder="Password"
-          v-model="form.password"
+          v-model="user.password"
         />
       </div>
       <div class="mb-3">
@@ -36,15 +36,19 @@
 <script>
 export default {
   name: "Login",
-  computed: {
+  /* computed: {
     user: {
       get() {
         return this.$store.state.currentUser.state.user;
       },
     },
-  },
+  }, */
   data() {
     return {
+      user: {
+        email: "",
+        password: "",
+      },
       form: {
         email: "",
         password: "",
@@ -55,7 +59,8 @@ export default {
   },
   methods: {
     login() {
-      axios
+      this.$store.dispatch("currentUser/loginUser", this.user);
+      /* axios
         .post("/api/login", this.form)
         .then(() => {
           this.$router.push({ name: "Dashboard" });
@@ -79,7 +84,7 @@ export default {
             console.log("Error", error.message);
           }
           console.log(error.config);
-        });
+        }); */
     },
   },
 };

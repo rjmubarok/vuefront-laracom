@@ -5,7 +5,7 @@ import currentUser from "./modules/currentUser";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    state: {
+    modules: {
         currentUser,
     },
 });
