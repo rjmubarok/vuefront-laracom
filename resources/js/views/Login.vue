@@ -1,39 +1,40 @@
 <template>
   <div class="mb-5">
     <div class="card card-body m-auto" style="max-width: 400px">
-      <h1>Login</h1>
-      <div class="alert alert-danger" v-if="validation">
-        {{ validation }}
-      </div>
-      <div class="alert alert-danger" v-else-if="errorMessage">
-        {{ errorMessage }}
-      </div>
-      <div class="mb-3">
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Email"
-          v-model="user.email"
-        />
-      </div>
-      <div class="mb-3">
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          v-model="user.password"
-        />
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-primary" type="submit" @click.prevent="login">
-          Login
-        </button>
-      </div>
+      <form @submit.prevent="submit">
+        <h1>Login</h1>
+        <div class="alert alert-danger" v-if="validation">
+          {{ validation }}
+        </div>
+        <div class="alert alert-danger" v-else-if="errorMessage">
+          {{ errorMessage }}
+        </div>
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            v-model="form.email"
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            v-model="form.password"
+          />
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   /* computed: {
@@ -58,8 +59,14 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      signIn: "auth/login",
+    }),
+    submit() {
+      this.signIn(this.form);
+    },
     login() {
-      this.$store.dispatch("currentUser/loginUser", this.user);
+      this.$store.dispatch("auth/loginUser", this.user);
       /* axios
         .post("/api/login", this.form)
         .then(() => {

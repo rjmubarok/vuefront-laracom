@@ -89,7 +89,7 @@ class UserController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'The provided credentials are incorrect.',
-            ], 404);
+            ], 401);
         }
 
         //generate token
