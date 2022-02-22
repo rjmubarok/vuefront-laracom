@@ -63,7 +63,7 @@ export default {
       signIn: "auth/login",
     }),
     submit() {
-      this.signIn(this.form);
+      this.signIn(this.form).then(this.$router.push({ name: "Dashboard" }));
     },
     login() {
       this.$store.dispatch("auth/loginUser", this.user);
