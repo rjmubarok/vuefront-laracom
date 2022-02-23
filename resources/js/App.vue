@@ -9,6 +9,11 @@
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/dashboard" class="nav-link">
+              Dashboard
+            </router-link>
+          </li>
         </ul>
         <ul class="navbar-nav d-flex">
           <li class="nav-item">
@@ -26,12 +31,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "App",
   computed: {
-    loggedIn: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+    }),
+    currentUser: {
       get() {
-        return this.$store.state.currentUser.loggedIn;
+        return this.$store.state.auth.user;
       },
     },
   },
@@ -45,6 +55,7 @@ export default {
   created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("login_token");
+    this.$store.dispatch("auth/getUser");
   },
 };
 </script>
