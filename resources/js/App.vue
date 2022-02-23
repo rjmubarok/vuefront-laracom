@@ -9,10 +9,10 @@
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
-          <li class="nav-item" v-if="authenticated">
-            <router-link to="/dashboard" class="nav-link"
-              >Dashboard</router-link
-            >
+          <li class="nav-item">
+            <router-link to="/dashboard" class="nav-link">
+              Dashboard
+            </router-link>
           </li>
         </ul>
         <ul class="navbar-nav d-flex">
@@ -38,11 +38,10 @@ export default {
   computed: {
     ...mapGetters({
       authenticated: "auth/authenticated",
-      user: "auth/user",
     }),
-    loggedIn: {
+    currentUser: {
       get() {
-        return this.$store.state.currentUser.loggedIn;
+        return this.$store.state.auth.user;
       },
     },
   },
@@ -53,9 +52,10 @@ export default {
       });
     },
   },
-  /* created() {
+  created() {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + localStorage.getItem("login_token");
-  }, */
+    this.$store.dispatch("auth/getUser");
+  },
 };
 </script>

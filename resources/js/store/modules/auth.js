@@ -10,20 +10,26 @@ const getters = {
         return state.token && state.user;
     },
 
-    user(state) {
+    /*     user(state) {
         return state.user;
-    },
+    }, */
 };
 const mutations = {
-    SET_TOKEN(state, token) {
+    setUser(state, data) {
+        state.user = data;
+    },
+    setToken(state, token) {
+        state.token = token;
+    },
+    /*     SET_TOKEN(state, token) {
         state.token = token;
     },
     SET_USER(state, data) {
         state.user = data;
-    },
+    }, */
 };
 const actions = {
-    async login({ dispatch, commit }, credentials) {
+    /* async login({ dispatch, commit }, credentials) {
         await axios.post("/api/login", credentials).then((response) => {
             if (response.data.token) {
                 dispatch("attempt", response.data.token);
@@ -51,20 +57,32 @@ const actions = {
         } catch (error) {
             console.log("failed");
         }
-    },
-    /* loginUser({}, user) {
+    }, */
+    getUser({ commit }) {
         axios
-            .post("/api/login", {
-                email: user.email,
-                password: user.password,
+            .get("/api/currentUser")
+            .then((response) => {
+                commit("setUser", response.data);
             })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    loginUser({ commit }, user) {
+        axios
+            .post("/api/login", user)
             .then((response) => {
                 if (response.data.token) {
                     //save the token
                     localStorage.setItem("login_token", response.data.token);
+                    commit("setToken", response.data.token);
+                    router.push({ name: "Dashboard" });
                 }
+            })
+            .catch((error) => {
+                console.log(error);
             });
-    }, */
+    },
 };
 
 export default {

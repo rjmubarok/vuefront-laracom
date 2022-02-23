@@ -1,7 +1,7 @@
 <template>
   <div class="mb-5">
     <div class="card card-body m-auto" style="max-width: 400px">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="login">
         <h1>Login</h1>
         <div class="alert alert-danger" v-if="validation">
           {{ validation }}
@@ -14,7 +14,7 @@
             type="email"
             class="form-control"
             placeholder="Email"
-            v-model="form.email"
+            v-model="user.email"
           />
         </div>
         <div class="mb-3">
@@ -22,7 +22,7 @@
             type="password"
             class="form-control"
             placeholder="Password"
-            v-model="form.password"
+            v-model="user.password"
           />
         </div>
         <div class="mb-3">
@@ -37,34 +37,27 @@
 import { mapActions } from "vuex";
 export default {
   name: "Login",
-  /* computed: {
-    user: {
-      get() {
-        return this.$store.state.currentUser.state.user;
-      },
-    },
-  }, */
   data() {
     return {
       user: {
         email: "",
         password: "",
       },
-      form: {
+      /* form: {
         email: "",
         password: "",
-      },
+      }, */
       errorMessage: "",
       validation: null,
     };
   },
   methods: {
-    ...mapActions({
+    /* ...mapActions({
       signIn: "auth/login",
     }),
     submit() {
       this.signIn(this.form).then(this.$router.push({ name: "Dashboard" }));
-    },
+    }, */
     login() {
       this.$store.dispatch("auth/loginUser", this.user);
       /* axios

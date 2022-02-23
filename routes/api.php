@@ -33,6 +33,8 @@ Route::get('/orders', [OrderController::class, 'index']);
 //Authentic routes
 Route::middleware('auth:sanctum')->group(function () {
 
+  Route::get('currentUser', [UserController::class, 'currentUser']);
+
   //user routes
   Route::resource('/user', UserController::class)->middleware('permission:user-crud');
 
