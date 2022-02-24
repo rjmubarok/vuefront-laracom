@@ -23,6 +23,9 @@ class UserController extends Controller
     {
         return Auth::user();
     }
+    public function logout(Request $request) {
+        $request->user()->tokens()->delete();
+    }
 
     /**
      * Store a newly created resource in storage.
