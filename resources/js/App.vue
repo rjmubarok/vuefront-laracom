@@ -63,7 +63,7 @@ export default {
   name: "App",
   computed: {
     ...mapGetters({
-      authenticated: "auth/authenticated",
+      loggedIn: "auth/loggedIn",
     }),
     currentUser: {
       get() {
@@ -82,6 +82,7 @@ export default {
           delete axios.defaults.headers.common["Authorization"];
           //empty user
           this.$store.state.auth.user = null;
+          this.$store.state.auth.token = null;
           //redirect to login
           window.location.href = "login";
         })

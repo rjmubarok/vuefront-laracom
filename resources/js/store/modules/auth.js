@@ -6,8 +6,8 @@ const state = {
 };
 
 const getters = {
-    authenticated(state) {
-        return state.token && state.user;
+    loggedIn(state) {
+        return state.user;
     },
 };
 const mutations = {
@@ -24,8 +24,10 @@ const actions = {
             .get("/api/currentUser")
             .then((response) => {
                 commit("setUser", response.data);
+                window.user = response.data;
             })
             .catch((error) => {
+                commit("setUser", {});
                 console.log(error);
             });
     },
