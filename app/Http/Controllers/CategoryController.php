@@ -15,7 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        $categories = Category::all();
+        return response()->json([
+            'categories'=> $categories
+        ],200);
     }
 
     /**
@@ -38,7 +41,7 @@ class CategoryController extends Controller
     {
         /**
          * Fillable fields
-         * 
+         *
          * name (string compulsory)
          * slug (string compulsory)
          * description (string nullable)
@@ -46,11 +49,11 @@ class CategoryController extends Controller
          * active (binary default 1)
          * parent_id (nullable)
          */
-        
+
         $request->validate([
             'name' => 'string',
         ]);
-        
+
         $category = Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
@@ -104,7 +107,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        
+
         $category->delete();
         return response('Successfully Deleted.');
     }
