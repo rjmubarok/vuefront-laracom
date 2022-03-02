@@ -1,45 +1,32 @@
-import router from "../../router";
-
 const state = {
-    token: null,
     user: {},
 };
 
-const getters = {
-    loggedIn(state) {
-        return state.user;
-    },
-};
 const mutations = {
     setUser(state, data) {
         state.user = data;
     },
-    setToken(state, token) {
-        state.token = token;
-    },
 };
+
 const actions = {
-    getUser({ commit }) {
-        axios
+    async getUser({ commit }) {
+        await axios
             .get("/api/currentUser")
             .then((response) => {
                 commit("setUser", response.data);
-                window.user = response.data;
             })
             .catch((error) => {
                 commit("setUser", {});
                 console.log(error);
             });
     },
-    loginUser({ commit }, user) {
-        axios
+    async loginUser({ commit }, user) {
+        await axios
             .post("/api/login", user)
             .then((response) => {
                 if (response.data.token) {
                     //save the token
                     localStorage.setItem("login_token", response.data.token);
-                    commit("setToken", response.data.token);
-                    //router.push({ name: "Dashboard" });
                     window.location.href = "dashboard";
                 }
             })
@@ -47,6 +34,9 @@ const actions = {
                 console.log(error);
             });
     },
+};
+const getters = {
+    loggedIn: (state) => !!state.user.name,
 };
 
 export default {

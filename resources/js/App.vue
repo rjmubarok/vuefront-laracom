@@ -10,7 +10,7 @@
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link">
+            <router-link to="/dashboard" class="nav-link" v-if="loggedIn">
               Dashboard
             </router-link>
           </li>

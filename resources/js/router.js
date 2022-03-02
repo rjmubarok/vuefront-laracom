@@ -24,18 +24,18 @@ const routes = [
     },
 ];
 
-const isAuthenticated = localStorage.getItem("login_token") ? true : false;
-
 const router = new VueRouter({
     mode: "history",
     linkActiveClass: "active",
     routes,
 });
-console.log(store.getters["auth/loggedIn"]);
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth && !isAuthenticated) next({ name: "Login" });
-    else next();
+    if (to.meta.requiresAuth) {
+        let authenticated = !!localStorage.getItem("login_token");
+        if (!authenticated) next({ name: "Login" });
+        else next();
+    } else next();
 });
 
 export default router;
