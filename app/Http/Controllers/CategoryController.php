@@ -51,7 +51,8 @@ class CategoryController extends Controller
          */
 
         $request->validate([
-            'name' => 'string',
+            'name'=>'required|min:4',
+            'status'=>'required'
         ]);
 
         $category = Category::create([
@@ -59,6 +60,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
             'description' => $request->description,
             'image' => $request->image,
+            'status'=>$request->status,
             'parent_id' => $request->parent_id,
         ]);
 

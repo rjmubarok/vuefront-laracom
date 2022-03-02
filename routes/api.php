@@ -63,3 +63,4 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::put('order/{order}', [ProductController::class, 'update'])->middleware('permission:update-product');
   Route::delete('order/{order}', [ProductController::class, 'destroy'])->Middleware('permission:delete-produc');
 });
+Route::post('category', [CategoryController::class, 'store']);

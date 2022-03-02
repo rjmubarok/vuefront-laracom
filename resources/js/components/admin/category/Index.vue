@@ -2,14 +2,15 @@
   <div class="row pt-3">
     <div class="col-md-8 offset-2">
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Category</h3>
+        <div class="card-header d-flex justify-content-between">
+
           <router-link
             to="/add-category"
             class="btn btn-success btn-sm float-right"
           >
             Add Category</router-link
           >
+          <h3 class="card-title">Category</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -34,9 +35,9 @@
                 <td>{{Category.description}}</td>
                 <td>{{Category.image}}</td>
                 <td>{{Category.parent_id}}</td>
-<td>
-                    <span class="badge" :class="statuscolor(Category.active)">
-                      {{ statusname(Category.active) }}</span
+                <td>
+                    <span class="badge" :class="statuscolor(Category.status)">
+                      {{ statusname(Category.status) }}</span
                     >
                   </td>
                 <td>
