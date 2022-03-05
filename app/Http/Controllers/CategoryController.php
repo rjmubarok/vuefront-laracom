@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Image;
 
 class CategoryController extends Controller
 {
@@ -17,8 +18,8 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         return response()->json([
-            'categories'=> $categories
-        ],200);
+            'categories' => $categories
+        ], 200);
     }
 
     /**
@@ -49,22 +50,53 @@ class CategoryController extends Controller
          * active (binary default 1)
          * parent_id (nullable)
          */
-
+        $success = false;
         $request->validate([
-            'name'=>'required|min:4',
-            'status'=>'required'
+            'name' => 'required|min:4',
+            'status' => 'required'
         ]);
+        $file      = explode(';', $request->image);
+        $file      = explode('/', $file[0]);
+        $file_ex   = end($file);
+        $slug      = Str::slug($request->name);
+        $file_name = $slug . '.' . $file_ex;
+        $success = Category::create([
+            'name'       => $request->name,
+            'slug'        => $slug,
+            'description'     => $request->description,
+            'status'      => $request->status,
+            'image'         => $file_name,
 
-        $category = Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'description' => $request->description,
-            'image' => $request->image,
-            'status'=>$request->status,
-            'parent_id' => $request->parent_id,
         ]);
+        if ($success) {
+            Image::make($request->image)->save(public_path('uploades/') . $file_name);
+        }
+        return response()->json([
+            'success' => $success,
+        ], 200);
+        // $category = Category::create([
+        //     'name' => $request->name,
+        //     'slug' => Str::slug($request->name),
+        //     'description' => $request->description,
+        //     'image' => $request->image,
+        //     'status'=>$request->status,
+        //     'parent_id' => $request->parent_id,
+        // ]);
+        // $category = new Category;
+        // $category->name = $request->name;
+        // $category->description = $request->description;
+        // $category->image = $request->image;
+        // $category->slug = Str::slug($request->name, '_');
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $ext = $file->getClientOriginalExtension();
+        //     $image_name = uniqid(). '.'. $ext;
+        //     $file->move('storage/post' ,$image_name);
+        //     $category->image = $image_name;
+        //  }
 
-        return response($category,201);
+        //  $category->save();
+        // return response($category, 201);
     }
 
     /**

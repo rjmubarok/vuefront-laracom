@@ -11,10 +11,9 @@
             >
             <h3 class="card-title j">Create Category</h3>
           </div>
-          <h1>Add category</h1>
           <!-- /.card-header -->
           <div class="card-body">
-            <form @submit.prevent="addCategory()" method="post">
+            <form @submit.prevent="addCategory()" method="post" enctype="multipart/form-data">
               <div class="form-row">
                 <div class="col-md-8 mb-3">
                   <label for="validationDefault01">Category Name</label>
@@ -45,6 +44,23 @@
                     required
                   />
                 </div>
+                <div class="col-md-8 mb-3">
+                  <label for="validationDefault02">Image</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="image"
+                    :v-model="form.image"
+                    name="image"
+                    @change="loadeimage($event)"
+                  />
+
+                </div>
+                <div class="col-md-3">
+                <img :src="form.image" alt="" height="70px" class="float-right">
+                </div>
+
+
                 <div class="form-group row">
                   <label for="status" class="col-sm-3 col-form-label"
                     >Status</label
@@ -107,7 +123,8 @@ export default {
     form: new Form({
       name: null,
       description: null,
-      status: 1,
+      status: 0,
+      image: null,
     }),
   }),
   methods: {
@@ -123,21 +140,28 @@ export default {
         this.form.name = null;
         this.form.description = null;
         this.form.status = null;
+        this.form.image = '';
+        this.$router.push('/categories');
+      }).catch((err)=>{
+       console.log(err);
       });
-      //   let test = this;
-      //   this.form.post("/api/category").then(function (data) {
-      //     Toast.fire({
-      //       icon: "success",
-      //       title: "Category Added Successfully",
-      //     });
-      //     toastr.success("Category Added Successfully");
-      //     test.form.name = null;
-      //     test.form.status = null;
 
-      //     test.$router.push("/categories");
-      //   });
     },
+    loadeimage:function(e){
+     let test = this;
+     let file = e.target.files[0];
+    const filereader = new FileReader();
+    filereader.onload = function(e){
+        // console.log(e.target.result);
+        test.form.image = e.target.result;
+    };
+    filereader.readAsDataURL(file);
+
+    }
   },
+   fileLink: function(name) {
+            return 'uploades/' + name;
+        },
   mounted() {
     // this.addCategory();
   },

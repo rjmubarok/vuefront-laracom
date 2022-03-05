@@ -64,3 +64,4 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::delete('order/{order}', [ProductController::class, 'destroy'])->Middleware('permission:delete-produc');
 });
 Route::post('category', [CategoryController::class, 'store']);
+Route::delete('category/{category}', [CategoryController::class, 'destroy']);

@@ -8,8 +8,8 @@ import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
 import Category from "./components/admin/category/Index.vue"
 import Addcategory from "./components/admin/category/Create.vue"
+import EditCategory from "./components/admin/category/Edit.vue"
 Vue.use(VueRouter);
-
 const routes = [
     { path: "*", component: NotFound },
     { path: "/login", component: Login },
@@ -19,6 +19,7 @@ const routes = [
     { path: "/dashboard", component: Dashboard, name: "Dashboard" },
     { path: "/categories", component:Category},
     { path: "/add-category", component:Addcategory},
+    { path: '/edit-category/:id', component:EditCategory},
 ];
 
 const router = new VueRouter({
