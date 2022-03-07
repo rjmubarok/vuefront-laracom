@@ -187,4 +187,33 @@ class CategoryController extends Controller
         $category->delete();
         return response('Successfully Deleted.');
     }
+    public function removeitem(Request $request){
+        $sl =0;
+        foreach($request->ids as $id){
+           $category=Category::find($id);
+            $category->delete();
+            $sl++;
+
+        }
+        $success = $sl>0? true:false;
+        return response()->json([
+            'success'=>$success ,
+            'total'=>$sl
+        ],200);
+    }
+    public function ChangeStatus(Request $request){
+        $sl =0;
+        foreach($request->ids as $id){
+           $category=Category::find($id);
+           $category->status=$request->status;
+            $category->update();
+            $sl++;
+
+        }
+        $success = $sl>0? true:false;
+        return response()->json([
+            'success'=>$success ,
+            'total'=>$sl
+        ],200);
+    }
 }

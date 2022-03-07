@@ -32,3 +32,5 @@ Route::get('/category',function(){
     return view('category');
 }); */
 Route::post('/update-category', [CategoryController::class, 'update']);
+Route::post('/categories/remove-items', [App\Http\Controllers\CategoryController::class, 'removeitem']);
+Route::post('/categories/Change-Status-Active', [App\Http\Controllers\CategoryController::class, 'ChangeStatus']);

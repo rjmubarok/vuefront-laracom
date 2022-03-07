@@ -16,7 +16,14 @@
           <table class="table">
             <thead>
               <tr>
-                <th><input type="checkbox" /></th>
+                <th>
+                    <input
+                      :disabled="emtyData()"
+                      type="checkbox"
+                      @click="selectAll()"
+                      v-model="selectedAll"
+                    />
+                  </th>
                 <th scope="col">ID</th>
                 <th scope="col">Category Name</th>
                 <th scope="col">Slug</th>
@@ -61,6 +68,50 @@
                   </button>
                 </td>
               </tr>
+              <tr v-if="!emtyData()">
+                  <td colspan="2">
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-info dropdown-toggle"
+                        :disabled="!Isselected"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Action
+                      </button>
+                      <div class="dropdown-menu">
+                        <button
+                          @click="removeitems(selected)"
+                          type="button"
+                          class="dropdown-item btn btn-sm btn-danger"
+                        >
+                          Remove
+                        </button>
+                        <button
+                          @click="ChangeStatus(selected, 1)"
+                          type="button"
+                          class="dropdown-item btn btn-sm btn-danger"
+                        >
+                          Active
+                        </button>
+                        <button
+                          @click="ChangeStatus(selected, 0)"
+                          type="button"
+                          class="dropdown-item btn btn-sm btn-danger"
+                        >
+                          Inactive
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+               <tr v-if="emtyData()">
+                  <td colspan="9">
+                    <h4 class="text-center text-danger">Data Not Found</h4>
+                  </td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -91,12 +142,20 @@ export default {
   name: "manage",
   data() {
     return {
-      selected: [],
+     selected: [],
+      selectedAll: false,
+      Isselected: false,
     };
   },
 
   mounted() {
     this.$store.dispatch("getCategoriess");
+  },
+   watch: {
+    selected: function (selected) {
+      this.Isselected = selected.length > 0;
+      this.selectedAll = selected.length == this.Categories.length;
+    },
   },
   computed: {
     Categories() {
@@ -144,6 +203,57 @@ export default {
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
       });
+    },
+     emtyData() {
+      return this.Categories.length < 1;
+    },
+     selectAll: function () {
+      if (event.target.checked === false) {
+        this.selected = [];
+      } else {
+        this.Categories.forEach((Category) => {
+          if (this.selected.indexOf(Category.id)) {
+            this.selected.push(Category.id);
+          }
+        });
+      }
+    },
+
+     removeitems: function (selected) {
+     axios
+          .post("/categories/remove-items", { ids: selected })
+          .then((response) => {
+            Swal.fire(
+              "Deleted!",
+              response.data.total + ' ' + "Category has been deleted Successfully !.",
+              "success"
+            );
+            this.selected = [];
+            this.selectAll = false;
+            this.Isselected = false;
+            this.$store.dispatch("getCategoriess");
+          })
+          .catch((error) => {});
+    },
+    ChangeStatus: function (selected, status) {
+      let msg = status === 1 ? "Active" : "Inactive";
+      axios
+        .post("/categories/Change-Status-Active", {
+          ids: selected,
+          status: status,
+        })
+        .then((response) => {
+               Swal.fire(
+              response.data.total + "  Category has been  Successfully " + msg
+
+            );
+        //   toastr.success(
+        //     response.data.total + "  Category has been  Successfully " + msg
+        //   );
+          this.$store.dispatch("getCategoriess");
+          this.selected = [];
+          this.selectAll = false;
+        });
     },
   },
 };
