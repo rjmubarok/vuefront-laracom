@@ -16,6 +16,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th><input type="checkbox" /></th>
                 <th scope="col">ID</th>
                 <th scope="col">Category Name</th>
                 <th scope="col">Slug</th>
@@ -28,6 +29,9 @@
             </thead>
             <tbody>
               <tr :key="Category.id" v-for="(Category, index) in Categories">
+                <th>
+                  <input type="checkbox" :value="Category.id" v-model="selected" />
+                </th>
                 <th scope="row">{{ ++index }}</th>
                 <td>{{ Category.name }}</td>
                 <td>{{ Category.slug }}</td>
@@ -43,11 +47,11 @@
                 </td>
                 <td>
                   <router-link
-                      :to="`/edit-category/${Category.slug}`"
-                      class="btn btn-sm btn-info"
-                    >
-                      Edit</router-link
-                    >
+                    :to="`/edit-category/${Category.slug}`"
+                    class="btn btn-sm btn-info"
+                  >
+                    Edit</router-link
+                  >
                   <button
                     type="submit"
                     class="btn btn-sm btn-danger"
@@ -85,6 +89,12 @@
 import axios from "axios";
 export default {
   name: "manage",
+  data() {
+    return {
+      selected: [],
+    };
+  },
+
   mounted() {
     this.$store.dispatch("getCategoriess");
   },

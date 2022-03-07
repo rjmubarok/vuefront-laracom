@@ -11,15 +11,16 @@
             >
             <h3 class="card-title j">Edit Category</h3>
           </div>
-
           <!-- /.card-header -->
           <div class="card-body">
             <form
-              @submit.prevent="addCategory()"
-              method="post"
+              @submit.prevent="updateCategory()"
+              method="POST"
               enctype="multipart/form-data"
             >
+
               <div class="form-row">
+                  {{ this.$route.params.id}}
                 <div class="col-md-8 mb-3">
                   <label for="validationDefault01">Category Name</label>
                   <input
@@ -37,6 +38,7 @@
                     v-html="form.errors.get('name')"
                   />
                 </div>
+                <input type="hidden" v-model="form.id">
                 <div class="col-md-8 mb-3">
                   <label for="validationDefault02">Description</label>
                   <input
@@ -103,7 +105,7 @@
                   :disabled="form.busy"
                   class="btn btn-info"
                 >
-                  Save Category
+                  Update Category
                 </button>
                 <button type="reset" class="btn btn-default float-right">
                   Cancel
@@ -125,36 +127,51 @@
 
 <script>
 import Form from "vform";
+import axios from "axios";
 export default {
-  name: "create",
+  name: "edit",
   data: () => ({
     form: new Form({
+      id: null,
       name: null,
       description: null,
-      status: 0,
+      status: 1,
       image: null,
     }),
   }),
+  mounted() {
+    this.getCategory();
+  },
   methods: {
-    addCategory: function () {
+    updateCategory: function () {
+        var id = this.$route.params.id;
       this.form
-        .post("/api/category")
+        .post('/update-category/')
         .then((response) => {
+            console.log(response);
           Swal.fire({
             position: "top",
             icon: "success",
-            title: "Your work has been saved",
+            title: "Update Category Successfully",
             showConfirmButton: false,
             timer: 1500,
           });
-          this.form.name = null;
-          this.form.description = null;
-          this.form.status = null;
-          this.form.image = "";
           this.$router.push("/categories");
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    getCategory: function () {
+      var slug = this.$route.params.slug;
+      axios
+        .get("/api/category/" + slug)
+        .then((response) => {
+          this.form.fill(response.data.category);
+        //   console.log(response.data.category);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
     loadeimage: function (e) {
@@ -170,9 +187,6 @@ export default {
   },
   fileLink: function (name) {
     return "uploades/" + name;
-  },
-  mounted() {
-    // this.addCategory();
   },
 };
 </script>

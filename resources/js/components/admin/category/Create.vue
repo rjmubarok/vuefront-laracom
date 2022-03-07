@@ -9,11 +9,16 @@
               class="btn btn-success btn-sm float-right"
               >Category</router-link
             >
-            <h3 class="card-title j">Create Category</h3>
+            <h3 class="card-title">Create Category</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form @submit.prevent="addCategory()" method="post" enctype="multipart/form-data">
+            <form
+              @submit.prevent="addCategory()"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+
               <div class="form-row">
                 <div class="col-md-8 mb-3">
                   <label for="validationDefault01">Category Name</label>
@@ -54,12 +59,15 @@
                     name="image"
                     @change="loadeimage($event)"
                   />
-
                 </div>
                 <div class="col-md-3">
-                <img :src="form.image" alt="" height="70px" class="float-right">
+                  <img
+                    :src="form.image"
+                    alt=""
+                    height="70px"
+                    class="float-right"
+                  />
                 </div>
-
 
                 <div class="form-group row">
                   <label for="status" class="col-sm-3 col-form-label"
@@ -123,45 +131,46 @@ export default {
     form: new Form({
       name: null,
       description: null,
-      status: 0,
+      status: 1,
       image: null,
     }),
   }),
   methods: {
     addCategory: function () {
-      this.form.post("/api/category").then((response) => {
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 1500,
+      this.form
+        .post("/api/category")
+        .then((response) => {
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.form.name = null;
+          this.form.description = null;
+          this.form.status = null;
+          this.form.image = "";
+          this.$router.push("/categories");
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        this.form.name = null;
-        this.form.description = null;
-        this.form.status = null;
-        this.form.image = '';
-        this.$router.push('/categories');
-      }).catch((err)=>{
-       console.log(err);
-      });
-
     },
-    loadeimage:function(e){
-     let test = this;
-     let file = e.target.files[0];
-    const filereader = new FileReader();
-    filereader.onload = function(e){
+    loadeimage: function (e) {
+      let test = this;
+      let file = e.target.files[0];
+      const filereader = new FileReader();
+      filereader.onload = function (e) {
         // console.log(e.target.result);
         test.form.image = e.target.result;
-    };
-    filereader.readAsDataURL(file);
-
-    }
+      };
+      filereader.readAsDataURL(file);
+    },
   },
-   fileLink: function(name) {
-            return 'uploades/' + name;
-        },
+  fileLink: function (name) {
+    return "uploades/" + name;
+  },
   mounted() {
     // this.addCategory();
   },

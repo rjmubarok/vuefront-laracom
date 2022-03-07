@@ -19,7 +19,7 @@ const routes = [
     { path: "/dashboard", component: Dashboard, name: "Dashboard" },
     { path: "/categories", component:Category},
     { path: "/add-category", component:Addcategory},
-    { path: '/edit-category/:id', component:EditCategory},
+    { path: '/edit-category/:slug', component:EditCategory},
 ];
 
 const router = new VueRouter({
