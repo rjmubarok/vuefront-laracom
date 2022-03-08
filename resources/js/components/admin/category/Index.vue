@@ -247,9 +247,6 @@ export default {
               response.data.total + "  Category has been  Successfully " + msg
 
             );
-        //   toastr.success(
-        //     response.data.total + "  Category has been  Successfully " + msg
-        //   );
           this.$store.dispatch("getCategoriess");
           this.selected = [];
           this.selectAll = false;
