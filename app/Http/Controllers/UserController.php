@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,6 +17,14 @@ class UserController extends Controller
     public function index()
     {
         return User::all();
+    }
+
+    public function currentUser()
+    {
+        return Auth::user();
+    }
+    public function logout(Request $request) {
+        $request->user()->tokens()->delete();
     }
 
     /**
@@ -89,7 +98,7 @@ class UserController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'The provided credentials are incorrect.',
-            ], 404);
+            ], 401);
         }
 
         //generate token
@@ -101,7 +110,7 @@ class UserController extends Controller
             'token' => $token
         ];
 
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 
     public function register(Request $request)

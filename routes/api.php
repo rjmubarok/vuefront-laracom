@@ -33,13 +33,17 @@ Route::get('/orders', [OrderController::class, 'index']);
 //Authentic routes
 Route::middleware('auth:sanctum')->group(function () {
 
+  Route::get('currentUser', [UserController::class, 'currentUser']);
+  Route::post('logout', [UserController::class, 'logout']);
+
   //user routes
   Route::resource('/user', UserController::class)->middleware('permission:user-crud');
 
   //category routes
   Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
-  Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
+//   Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
   Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
+  Route::get('category/{slug}', [CategoryController::class, 'show'])->middleware('permission:delete-category');
 
   //brand routes
   Route::post('brand', [BrandController::class, 'store'])->middleware('permission:create-brand');
@@ -61,3 +65,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::put('order/{order}', [ProductController::class, 'update'])->middleware('permission:update-product');
   Route::delete('order/{order}', [ProductController::class, 'destroy'])->Middleware('permission:delete-produc');
 });
+Route::post('category', [CategoryController::class, 'store']);
+Route::delete('category/{category}', [CategoryController::class, 'destroy']);
+// Route::put('category/{category}', [CategoryController::class, 'update']);

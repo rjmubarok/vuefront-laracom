@@ -15,18 +15,21 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
-            $table->integer('subcategory_id');
-            $table->integer('brand_id');
-            $table->integer('vandor_id')->nullable();
-            $table->float('price');
-            $table->string('name');
-            $table->string('code')->nullable();
+            $table->string('title');
             $table->string('slug');
-            $table->string('description')->nullable();
-            $table->string('Image');
-            $table->boolean('status');
-            $table->Integer('Parent_id')->nullable();
+            $table->string('sku');
+            $table->float('price');
+            $table->float('sell_price')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('short_desc')->nullable();
+            $table->text('description')->nullable();
+            $table->string('image');
+            $table->enum('status', ['draft', 'publish', 'inactive'])->default('draft');
+            $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            //$table->integer('subcategory_id');
+            $table->foreignId('brand_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('vendor_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            //$table->integer('parent_id')->nullable();
             $table->timestamps();
         });
     }
