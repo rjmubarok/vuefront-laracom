@@ -14,6 +14,11 @@
               Dashboard
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/categories" class="nav-link"
+              >Categories</router-link
+            >
+          </li>
         </ul>
         <ul class="navbar-nav d-flex">
           <li class="nav-item dropdown" v-if="currentUser.name">
