@@ -6,20 +6,29 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
-import Category from "./components/admin/category/Index.vue";
-import Addcategory from "./components/admin/category/Create.vue";
-import EditCategory from "./components/admin/category/Edit.vue";
+import Category from "./views/admin/category/Index.vue";
+import Addcategory from "./views/admin/category/Create.vue";
+import EditCategory from "./views/admin/category/Edit.vue";
 Vue.use(VueRouter);
 const routes = [
     { path: "*", component: NotFound },
-    { path: "/login", component: Login, name: "Login" },
+    { path: "/login", component: Login, name: "login" },
     { path: "/register", component: Register },
     { path: "/", component: Home },
     { path: "/about", component: About },
-    { path: "/dashboard", component: Dashboard, name: "Dashboard" },
-    { path: "/categories", component: Category },
-    { path: "/add-category", component: Addcategory },
-    { path: "/edit-category/:slug", component: EditCategory },
+    { path: "/admin", component: Dashboard },
+    { path: "/admin/dashboard", component: Dashboard, name: "dashboard" },
+    { path: "/admin/categories", component: Category, name: "category" },
+    {
+        path: "/admin/add-category",
+        component: Addcategory,
+        name: "addCategory",
+    },
+    {
+        path: "/admin/edit-category/:slug",
+        component: EditCategory,
+        name: "editCategory",
+    },
 ];
 
 const router = new VueRouter({
