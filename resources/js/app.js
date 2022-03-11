@@ -1,4 +1,4 @@
-require("./bootstrap");
+ require("./bootstrap");
 import Vue from "vue";
 import App from "./App.vue";
 import Admin from "./Admin.vue";
@@ -31,5 +31,6 @@ const app = new Vue({
     el: "#app",
     store,
     router,
+    brand,
     components: { App, Admin },
 });

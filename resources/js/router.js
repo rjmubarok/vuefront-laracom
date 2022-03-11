@@ -6,9 +6,14 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
+// category
 import Category from "./views/admin/category/Index.vue";
 import Addcategory from "./views/admin/category/Create.vue";
 import EditCategory from "./views/admin/category/Edit.vue";
+//brand
+import Brand from "./views/admin/brand/Index.vue";
+import AddBrand from "./views/admin/brand/Create.vue";
+import EditBrand from "./views/admin/brand/Edit.vue";
 Vue.use(VueRouter);
 const routes = [
     { path: "*", component: NotFound },
@@ -18,6 +23,7 @@ const routes = [
     { path: "/about", component: About },
     { path: "/admin", component: Dashboard },
     { path: "/admin/dashboard", component: Dashboard, name: "dashboard" },
+    // category
     { path: "/admin/categories", component: Category, name: "category" },
     {
         path: "/admin/add-category",
@@ -28,6 +34,18 @@ const routes = [
         path: "/admin/edit-category/:slug",
         component: EditCategory,
         name: "editCategory",
+    },
+    //brand
+    { path: "/admin/brands", component: Brand, name: "Brand" },
+    {
+        path: "/admin/add-brand",
+        component: AddBrand,
+        name: "addBrand",
+    },
+    {
+        path: "/admin/edit-brand/:slug",
+        component: EditBrand,
+        name: "editBrand",
     },
 ];
 
