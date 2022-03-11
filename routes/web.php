@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -34,3 +35,7 @@ Route::get('/category',function(){
 Route::post('/update-category', [CategoryController::class, 'update']);
 Route::post('/categories/remove-items', [App\Http\Controllers\CategoryController::class, 'removeitem']);
 Route::post('/categories/Change-Status-Active', [App\Http\Controllers\CategoryController::class, 'ChangeStatus']);
+//brand
+Route::post('/update-brand', [BrandController::class, 'update']);
+Route::post('/categories/remove-items', [App\Http\Controllers\BrandController::class, 'removeitem']);
+Route::post('/categories/Change-Status-Active', [App\Http\Controllers\BrandController::class, 'ChangeStatus']);

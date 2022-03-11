@@ -3,6 +3,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import brand from "./store/modules/brand";
 // vform
 import Form from 'vform'
 window.Form = Form;
@@ -30,5 +31,6 @@ const app = new Vue({
     el: "#app",
     store,
     router,
+    brand,
     components: { App },
 });

@@ -6,14 +6,16 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
-<<<<<<< HEAD
+//category
 import Category from "./components/admin/category/Index.vue"
 import Addcategory from "./components/admin/category/Create.vue"
 import EditCategory from "./components/admin/category/Edit.vue"
-=======
-import store from "./store";
+//brand
+import Brand from "./components/admin/brand/Index.vue"
+import AddBrand from "./components/admin/brand/Create.vue"
+import EditBrand from "./components/admin/brand/Edit.vue"
 
->>>>>>> 3306801a8f6082a187d2ac25391ed24ea8fa5296
+
 Vue.use(VueRouter);
 const routes = [
     { path: "*", component: NotFound },
@@ -21,19 +23,22 @@ const routes = [
     { path: "/register", component: Register },
     { path: "/", component: Home },
     { path: "/about", component: About },
-<<<<<<< HEAD
     { path: "/dashboard", component: Dashboard, name: "Dashboard" },
+    //category
     { path: "/categories", component:Category},
     { path: "/add-category", component:Addcategory},
     { path: '/edit-category/:slug', component:EditCategory},
-=======
+    //brand
+    { path: "/brands", component:Brand},
+    { path: "/add-brand", component:AddBrand},
+    { path: '/edit-brand/:slug', component:EditBrand},
+
     {
         path: "/dashboard",
         component: Dashboard,
         name: "Dashboard",
         meta: { requiresAuth: true },
     },
->>>>>>> 3306801a8f6082a187d2ac25391ed24ea8fa5296
 ];
 
 const router = new VueRouter({

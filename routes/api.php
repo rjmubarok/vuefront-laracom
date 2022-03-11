@@ -25,7 +25,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{category}', [CategoryController::class, 'show']);
-Route::get('/brands', [BrandController::class, 'index']);
+Route::get('/brand', [BrandController::class, 'index']);
 Route::get('/orders', [OrderController::class, 'index']);
 
 /**** End Public Routes ****/
@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('brand', [BrandController::class, 'store'])->middleware('permission:create-brand');
   Route::put('brand/{brand}', [BrandController::class, 'update'])->middleware('permission:update-brand');
   Route::delete('brand/{brand}', [BrandController::class, 'destroy'])->middleware('permission:delete-brand');
+  Route::get('brand/{slug}', [BrandController::class, 'show']);
 
   // vendor route
   Route::post('vendor', [VendorController::class, 'store'])->middleware('permission:create-vendor');
@@ -67,4 +68,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::post('category', [CategoryController::class, 'store']);
 Route::delete('category/{category}', [CategoryController::class, 'destroy']);
-// Route::put('category/{category}', [CategoryController::class, 'update']);
+Route::post('brand', [BrandController::class, 'store']);
+Route::delete('brand/{brand}', [BrandController::class, 'destroy']);
+Route::get('brand/{slug}', [BrandController::class, 'show']);
