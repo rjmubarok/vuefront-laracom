@@ -14,6 +14,14 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
+Route::get('admin', function () {
+  return view('admin');
+});
+
+Route::get('admin/{any}', function () {
+  return view('admin');
+})->where('any', '.*');
+
 Route::get('{any}', function () {
   return view('web');
 })->where('any', '.*');
