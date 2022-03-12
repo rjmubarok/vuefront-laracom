@@ -27,7 +27,7 @@ const actions = {
                 if (response.data.token) {
                     //save the token
                     localStorage.setItem("login_token", response.data.token);
-                    window.location.href = "dashboard";
+                    window.location.href = "admin/dashboard";
                 }
             })
             .catch((error) => {

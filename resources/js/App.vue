@@ -10,14 +10,9 @@
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link" v-if="loggedIn">
-              Dashboard
+            <router-link to="/admin/dashboard" class="nav-link" v-if="loggedIn">
+              Admin
             </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/categories" class="nav-link"
-              >Categories</router-link
-            >
           </li>
         </ul>
         <ul class="navbar-nav d-flex">

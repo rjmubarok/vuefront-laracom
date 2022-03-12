@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "./views/Home";
-import About from "./views/About";
-import Login from "./views/Login";
-import Register from "./views/Register";
-import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
+import Home from "./views/web/Home";
+import About from "./views/web/About";
+import Login from "./views/auth/Login";
+import Register from "./views/auth/Register";
+import Dashboard from "./views/admin/Dashboard";
 import Category from "./views/admin/category/Index.vue";
 import Addcategory from "./views/admin/category/Create.vue";
 import EditCategory from "./views/admin/category/Edit.vue";
@@ -16,8 +16,13 @@ const routes = [
     { path: "/register", component: Register },
     { path: "/", component: Home },
     { path: "/about", component: About },
-    { path: "/admin", component: Dashboard },
-    { path: "/admin/dashboard", component: Dashboard, name: "Dashboard" },
+    { path: "/admin", component: Dashboard, meta: { requiresAuth: true } },
+    {
+        path: "/admin/dashboard",
+        component: Dashboard,
+        meta: { requiresAuth: true },
+        name: "Dashboard",
+    },
     { path: "/admin/category", component: Category },
     { path: "/admin/add-category", component: Addcategory },
     { path: "/admin/edit-category/:slug", component: EditCategory },

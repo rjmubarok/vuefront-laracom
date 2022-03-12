@@ -7,7 +7,7 @@
         data-bg-class="bg-menu-theme"
       >
         <div class="app-brand demo">
-          <a href="index.html" class="app-brand-link">
+          <router-link to="/admin" class="app-brand-link">
             <span class="app-brand-logo demo">
               <svg
                 width="25"
@@ -87,7 +87,7 @@
             <span class="app-brand-text demo menu-text fw-bolder ms-2"
               >Sneat</span
             >
-          </a>
+          </router-link>
 
           <a
             href="javascript:void(0);"
@@ -334,7 +334,7 @@ export default {
           this.$store.state.auth.user = null;
           this.$store.state.auth.token = null;
           //redirect to login
-          window.location.href = "login";
+          window.location.href = "/login";
         })
         .catch((error) => {
           console.log(error);
