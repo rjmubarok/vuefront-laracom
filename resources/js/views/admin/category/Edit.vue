@@ -1,125 +1,112 @@
 <template>
   <div>
-    <div class="row pt-3">
-      <div class="col-md-8 offset-2">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between">
-            <router-link
-              to="/categories"
-              class="btn btn-success btn-sm float-right"
-              >Category</router-link
-            >
-            <h3 class="card-title j">Edit Category</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <form
-              @submit.prevent="updateCategory()"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-
-              <div class="form-row">
-                  {{ this.$route.params.id}}
-                <div class="col-md-8 mb-3">
-                  <label for="validationDefault01">Category Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="validationDefault01"
-                    placeholder="Category Name"
-                    v-model="form.name"
-                    name="name"
-                    required
-                    :class="{ 'is-invalid': form.errors.get('name') }"
-                  />
-                  <div
-                    v-if="form.errors.has('name')"
-                    v-html="form.errors.get('name')"
-                  />
-                </div>
-                <input type="hidden" v-model="form.id">
-                <div class="col-md-8 mb-3">
-                  <label for="validationDefault02">Description</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="validationDefault02"
-                    placeholder="Description"
-                    v-model="form.description"
-                    name="description"
-                    required
-                  />
-                </div>
-                <div class="col-md-8 mb-3">
-                  <label for="validationDefault02">Image</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="image"
-                    :v-model="form.image"
-                    name="image"
-                    @change="loadeimage($event)"
-                  />
-                </div>
-                <div class="col-md-3">
-                  <img
-                    :src="form.image"
-                    alt=""
-                    height="70px"
-                    class="float-right"
-                  />
-                </div>
-
-                <div class="form-group row">
-                  <label for="status" class="col-sm-3 col-form-label"
-                    >Status</label
-                  >
-                  <div class="col-sm-9">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      value="1"
-                      id="active"
-                      v-model="form.status"
-                    />
-                    <label class="form-check-label" for="active">
-                      Active
-                    </label>
-                    <input
-                      class="form-check-input ml-4"
-                      type="radio"
-                      value="0"
-                      id="Inactive"
-                      v-model="form.status"
-                    />
-                    <label class="form-check-label ml-5" for="Inactive">
-                      Inactive
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <button
-                  type="submit"
-                  :disabled="form.busy"
-                  class="btn btn-info"
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <router-link to="/categories" class="btn btn-success btn-sm float-right"
+          >Category</router-link
+        >
+        <h3 class="card-title j">Edit Category</h3>
+      </div>
+      <div class="card-body">
+        <form
+          @submit.prevent="updateCategory()"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-row">
+            {{ this.$route.params.id }}
+            <div class="col-md-8 mb-3">
+              <label for="validationDefault01">Category Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="validationDefault01"
+                placeholder="Category Name"
+                v-model="form.name"
+                name="name"
+                required
+                :class="{ 'is-invalid': form.errors.get('name') }"
+              />
+              <div
+                v-if="form.errors.has('name')"
+                v-html="form.errors.get('name')"
+              />
+            </div>
+            <input type="hidden" v-model="form.id" />
+            <div class="col-md-8 mb-3">
+              <label for="validationDefault02">Parent Category</label>
+              <select name="parent_id" id="parent_id" class="form-select">
+                <option value=""></option>
+                <option
+                  :key="Parent.id"
+                  v-for="Parent in Categories"
+                  :value="Parent.id"
+                  :selected="form.parent_id == Parent.id"
                 >
-                  Update Category
-                </button>
-                <button type="reset" class="btn btn-default float-right">
-                  Cancel
-                </button>
+                  {{ Parent.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-8 mb-3">
+              <label for="validationDefault02">Description</label>
+              <input
+                type="text"
+                class="form-control"
+                id="validationDefault02"
+                placeholder="Description"
+                v-model="form.description"
+                name="description"
+                required
+              />
+            </div>
+            <div class="col-md-8 mb-3">
+              <label for="validationDefault02">Image</label>
+              <input
+                type="file"
+                class="form-control"
+                id="image"
+                :v-model="form.image"
+                name="image"
+                @change="loadeimage($event)"
+              />
+            </div>
+            <div class="col-md-3">
+              <img :src="form.image" alt="" height="70px" class="float-right" />
+            </div>
+
+            <div class="form-group row">
+              <label for="status" class="col-sm-3 col-form-label">Status</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  value="1"
+                  id="active"
+                  v-model="form.status"
+                />
+                <label class="form-check-label" for="active"> Active </label>
+                <input
+                  class="form-check-input ml-4"
+                  type="radio"
+                  value="0"
+                  id="Inactive"
+                  v-model="form.status"
+                />
+                <label class="form-check-label ml-5" for="Inactive">
+                  Inactive
+                </label>
               </div>
-            </form>
+            </div>
           </div>
-          <!-- /.card -->
-
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-
-        <!-- /.col -->
+          <div class="card-footer">
+            <button type="submit" :disabled="form.busy" class="btn btn-info">
+              Update Category
+            </button>
+            <button type="reset" class="btn btn-default float-right">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -134,6 +121,7 @@ export default {
     form: new Form({
       id: null,
       name: null,
+      parent_id: null,
       description: null,
       status: 1,
       image: null,
@@ -141,14 +129,20 @@ export default {
   }),
   mounted() {
     this.getCategory();
+    this.$store.dispatch("getCategoriess");
+  },
+  computed: {
+    Categories() {
+      return this.$store.getters.categories;
+    },
   },
   methods: {
     updateCategory: function () {
-        var id = this.$route.params.id;
+      var id = this.$route.params.id;
       this.form
-        .post('/update-category/')
+        .put("/update-category/" + id)
         .then((response) => {
-            console.log(response);
+          console.log(response);
           Swal.fire({
             position: "top",
             icon: "success",
@@ -156,7 +150,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          this.$router.push("/categories");
+          this.$router.push("/admin/category");
         })
         .catch((err) => {
           console.log(err);
@@ -168,7 +162,7 @@ export default {
         .get("/api/category/" + slug)
         .then((response) => {
           this.form.fill(response.data.category);
-        //   console.log(response.data.category);
+          //   console.log(response.data.category);
         })
         .catch((error) => {
           console.log(error);

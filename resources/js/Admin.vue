@@ -265,7 +265,9 @@
                 flex-md-row flex-column
               "
             >
-              <div class="mb-2 mb-md-0">© 2022 Vuefront-laravel</div>
+              <div class="mb-2 mb-md-0">
+                © {{ new Date().getFullYear() }} Vuefront-laravel
+              </div>
               <div>
                 <a
                   href="https://themeselection.com/license/"
