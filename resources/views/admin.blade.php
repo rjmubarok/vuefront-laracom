@@ -22,24 +22,24 @@
         rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/css/core.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/vendor/css/theme-default.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{ asset('admin/vendor/js/helpers.js') }}"></script>
+    <script src="{{ asset('vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('admin/js/config.js') }}"></script>
+    <script src="{{ asset('js/config.js') }}"></script>
 </head>
 
 <body>
@@ -49,15 +49,15 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{ asset('admin/vendor/js/menu.js') }}"></script>
+    <script src="{{ asset('vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="/admin/js/main.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 
 </html>

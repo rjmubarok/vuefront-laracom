@@ -1,11 +1,51 @@
 <template>
   <div>
+    <h3 class="card-title">Category</h3>
     <div class="card">
       <div class="card-header d-flex justify-content-between">
-        <h3 class="card-title">Category</h3>
-        <router-link to="/admin/add-category" class="btn btn-primary">
-          Add Category</router-link
-        >
+        <div v-if="!emtyData()">
+          <div class="dropdown">
+            <button
+              class="btn btn-info btn-sm dropdown-toggle"
+              :disabled="!Isselected"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Action
+            </button>
+            <div class="dropdown-menu">
+              <button
+                @click="removeitems(selected)"
+                type="button"
+                class="dropdown-item text-danger py-1"
+              >
+                <i class="bx bx-trash me-1"></i>
+                Delete
+              </button>
+              <button
+                @click="ChangeStatus(selected, 1)"
+                type="button"
+                class="dropdown-item text-success py-1"
+              >
+                <i class="bx bxs-toggle-right me-1"></i>
+                Active
+              </button>
+              <button
+                @click="ChangeStatus(selected, 0)"
+                type="button"
+                class="dropdown-item text-info py-1"
+              >
+                <i class="bx bx-toggle-left me-1"></i>
+                Inactive
+              </button>
+            </div>
+          </div>
+        </div>
+        <router-link to="/admin/add-category" class="btn btn-primary btn-sm">
+          Add Category
+        </router-link>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -102,45 +142,7 @@
                 </div>
               </td>
             </tr>
-            <tr v-if="!emtyData()">
-              <td colspan="2">
-                <div class="dropdown">
-                  <button
-                    class="btn btn-info dropdown-toggle"
-                    :disabled="!Isselected"
-                    type="button"
-                    id="dropdownMenuButton"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Action
-                  </button>
-                  <div class="dropdown-menu">
-                    <button
-                      @click="removeitems(selected)"
-                      type="button"
-                      class="dropdown-item btn btn-sm btn-danger"
-                    >
-                      Remove
-                    </button>
-                    <button
-                      @click="ChangeStatus(selected, 1)"
-                      type="button"
-                      class="dropdown-item btn btn-sm btn-danger"
-                    >
-                      Active
-                    </button>
-                    <button
-                      @click="ChangeStatus(selected, 0)"
-                      type="button"
-                      class="dropdown-item btn btn-sm btn-danger"
-                    >
-                      Inactive
-                    </button>
-                  </div>
-                </div>
-              </td>
-            </tr>
+
             <tr v-if="emtyData()">
               <td colspan="9">
                 <h4 class="text-center text-danger">Data Not Found</h4>
@@ -151,13 +153,20 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-          <li class="page-item"><a class="page-link" href="#">«</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">»</a></li>
-        </ul>
+        <paginate
+          v-model="page"
+          :page-count="20"
+          :click-handler="clickCallback"
+          :prev-text="'<i class=\'tf-icon bx bx-chevrons-left\'></i>'"
+          :prev-class="'page-item prev'"
+          :prev-link-class="'page-link'"
+          :next-text="'<i class=\'tf-icon bx bx-chevrons-right\'></i>'"
+          :next-class="'page-item next'"
+          :next-link-class="'page-link'"
+          :container-class="'pagination'"
+          :page-class="'page-item'"
+          :page-link-class="'page-link'"
+        />
       </div>
     </div>
     <!-- /.card -->
@@ -170,6 +179,7 @@ export default {
   name: "manage",
   data() {
     return {
+      page: 1,
       selected: [],
       selectedAll: false,
       Isselected: false,
@@ -191,6 +201,10 @@ export default {
     },
   },
   methods: {
+    clickCallback: function (pageNum) {
+      console.log(pageNum);
+      console.log(this.Categories.length);
+    },
     statusname(status) {
       let data = {
         0: "Inactive",

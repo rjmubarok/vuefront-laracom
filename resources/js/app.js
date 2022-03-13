@@ -4,6 +4,8 @@ import App from "./App.vue";
 import Admin from "./Admin.vue";
 import router from "./router";
 import store from "./store";
+import Paginate from "vuejs-paginate";
+Vue.component("paginate", Paginate);
 // vform
 import Form from "vform";
 window.Form = Form;
