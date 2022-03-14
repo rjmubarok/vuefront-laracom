@@ -6,7 +6,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
-use Prophecy\Call\Call;
 
 class CategoryController extends Controller
 {
@@ -17,10 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return response()->json([
-            'categories' => $categories
-        ], 200);
+        $categories = Category::paginate(10);
+        return response()->json($categories,200);
     }
 
     /**
@@ -53,14 +50,17 @@ class CategoryController extends Controller
          */
         $success = false;
         $request->validate([
-            'name' => 'required',
-            'name' => 'required',
+            'name' => 'required|unique:categories,name',
             'status' => 'required'
         ]);
-        $file      = explode(';', $request->image);
-        $file      = explode('/', $file[0]);
-        $file_ex   = end($file);
-        $file_name = date('YmdHi') . '.' . $file_ex;
+        
+        $file_name = null;
+        if($request->image){
+            $file      = explode(';', $request->image);
+            $file      = explode('/', $file[0]);
+            $file_ex   = end($file);
+            $file_name = date('YmdHi') . '.' . $file_ex;
+        }
         $success = Category::create([
             'name'       => $request->name,
             'slug'        => Str::slug($request->name),
@@ -69,8 +69,9 @@ class CategoryController extends Controller
             'image'         =>$file_name ,
 
         ]);
-        if ($success) {
+        if ($success && $file_name) {
             Image::make($request->image)->save(public_path('uploades/') . $file_name);
+            Image::make($request->image)->resize(320, 240)->save(public_path('uploades/thumbs/') . $file_name);
         }
         return response()->json([
             'success' => $success,
@@ -106,10 +107,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Category $category)
     {
-        $category = Category::where('slug', $slug)->first();
-        return response()->json(['category' => $category], 200);
+        return response()->json($category, 200);
     }
 
     /**

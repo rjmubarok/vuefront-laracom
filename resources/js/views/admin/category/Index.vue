@@ -1,9 +1,10 @@
 <template>
   <div>
     <h3 class="card-title">Category</h3>
+    <router-view />
     <div class="card">
       <div class="card-header d-flex justify-content-between">
-        <div v-if="!emtyData()">
+        <div v-if="!emptyData()">
           <div class="dropdown">
             <button
               class="btn btn-info btn-sm dropdown-toggle"
@@ -43,20 +44,28 @@
             </div>
           </div>
         </div>
-        <router-link to="/admin/add-category" class="btn btn-primary btn-sm">
-          Add Category
-        </router-link>
+        <div>
+          <router-link to="/admin/add-category" class="btn btn-primary btn-sm">
+            Add Category
+          </router-link>
+          <router-link
+            to="/admin/category/create"
+            class="btn btn-primary btn-sm"
+          >
+            Add Bulk Category
+          </router-link>
+        </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <table class="table">
+        <table class="table" v-if="!emptyData()">
           <thead>
             <tr>
               <th>
                 <div class="form-check">
                   <input
                     class="form-check-input"
-                    :disabled="emtyData()"
+                    :disabled="emptyData()"
                     type="checkbox"
                     @click="selectAll()"
                     v-model="selectedAll"
@@ -84,11 +93,14 @@
               </th>
               <td>{{ Category.name }}</td>
               <td>
-                <img :src="fileLink(Category.image)" alt="" width="60px" />
+                <img :src="fileLink(Category.image)" alt="" height="40px" />
               </td>
               <td>{{ Category.parent }}</td>
               <td>
-                <span class="badge" :class="statuscolor(Category.status)">
+                <span
+                  class="badge rounded-pill"
+                  :class="statuscolor(Category.status)"
+                >
                   {{ statusname(Category.status) }}</span
                 >
               </td>
@@ -104,7 +116,7 @@
                   </button>
                   <div class="dropdown-menu" style="">
                     <router-link
-                      :to="`/admin/edit-category/${Category.slug}`"
+                      :to="`/admin/category/${Category.slug}`"
                       class="dropdown-item text-primary"
                     >
                       <svg
@@ -125,7 +137,7 @@
                       View details
                     </router-link>
                     <router-link
-                      :to="`/admin/edit-category/${Category.slug}`"
+                      :to="`/admin/category/${Category.id}/edit`"
                       class="dropdown-item text-info"
                     >
                       <i class="bx bx-edit-alt me-1"></i> Edit
@@ -142,21 +154,17 @@
                 </div>
               </td>
             </tr>
-
-            <tr v-if="emtyData()">
-              <td colspan="9">
-                <h4 class="text-center text-danger">Data Not Found</h4>
-              </td>
-            </tr>
           </tbody>
         </table>
+        <div v-else>
+          <h4 class="text-center text-danger">Data Not Found</h4>
+        </div>
       </div>
       <!-- /.card-body -->
-      <div class="card-footer clearfix">
+      <div class="card-footer clearfix" v-if="!emptyData()">
         <paginate
-          v-model="page"
-          :page-count="20"
-          :click-handler="clickCallback"
+          :page-count="total"
+          :click-handler="paginate"
           :prev-text="'<i class=\'tf-icon bx bx-chevrons-left\'></i>'"
           :prev-class="'page-item prev'"
           :prev-link-class="'page-link'"
@@ -176,10 +184,10 @@
 <script>
 import axios from "axios";
 export default {
-  name: "manage",
+  name: "category",
   data() {
     return {
-      page: 1,
+      total: 1,
       selected: [],
       selectedAll: false,
       Isselected: false,
@@ -187,7 +195,8 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getCategoriess");
+    this.emptyData();
+    this.$store.dispatch("getCategories", 1); // default page no 1
   },
   watch: {
     selected: function (selected) {
@@ -197,13 +206,14 @@ export default {
   },
   computed: {
     Categories() {
-      return this.$store.getters.categories;
+      let categories = this.$store.getters.categories;
+      this.total = categories.last_page ? categories.last_page : 1;
+      return categories.data;
     },
   },
   methods: {
-    clickCallback: function (pageNum) {
-      console.log(pageNum);
-      console.log(this.Categories.length);
+    paginate: function (pageNum) {
+      this.$store.dispatch("getCategories", pageNum);
     },
     statusname(status) {
       let data = {
@@ -214,13 +224,13 @@ export default {
     },
     statuscolor(status) {
       let data = {
-        0: "bg-danger",
+        0: "bg-secondary",
         1: "bg-success",
       };
       return data[status];
     },
     fileLink: function (name) {
-      return "uploades/" + name;
+      return "/uploades/thumbs/" + name;
     },
     remove(slug) {
       //   console.log(slug);
@@ -246,8 +256,8 @@ export default {
         }
       });
     },
-    emtyData() {
-      return this.Categories.length < 1;
+    emptyData() {
+      return this.Categories ? this.Categories.length < 1 : true;
     },
     selectAll: function () {
       if (event.target.checked === false) {

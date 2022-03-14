@@ -6,11 +6,10 @@ import About from "./views/web/About";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 import Dashboard from "./views/admin/Dashboard";
-import Category from "./views/admin/category/Index.vue";
-import Addcategory from "./views/admin/category/Create.vue";
-import EditCategory from "./views/admin/category/Edit.vue";
+import categoryRoutes from "./views/admin/category/router";
+
 Vue.use(VueRouter);
-const routes = [
+let routes = [
     { path: "*", component: NotFound },
     { path: "/login", component: Login, name: "Login" },
     { path: "/register", component: Register },
@@ -23,11 +22,8 @@ const routes = [
         meta: { requiresAuth: true },
         name: "Dashboard",
     },
-    { path: "/admin/category", component: Category },
-    { path: "/admin/add-category", component: Addcategory },
-    { path: "/admin/edit-category/:slug", component: EditCategory },
 ];
-
+routes = routes.concat(categoryRoutes);
 const router = new VueRouter({
     mode: "history",
     linkActiveClass: "active",

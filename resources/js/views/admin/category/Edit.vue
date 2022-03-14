@@ -5,7 +5,7 @@
         <router-link to="/categories" class="btn btn-success btn-sm float-right"
           >Category</router-link
         >
-        <h3 class="card-title j">Edit Category</h3>
+        <h3 class="card-title">Edit Category</h3>
       </div>
       <div class="card-body">
         <form
