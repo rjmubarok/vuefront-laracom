@@ -10,9 +10,9 @@
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/admin/dashboard" class="nav-link" v-if="loggedIn">
+            <a href="/admin/dashboard" class="nav-link" v-if="loggedIn">
               Admin
-            </router-link>
+            </a>
           </li>
         </ul>
         <ul class="navbar-nav d-flex">
@@ -32,9 +32,9 @@
               aria-labelledby="navbarDarkDropdownMenuLink"
             >
               <li>
-                <a class="dropdown-item" href="#logout" @click="logout"
-                  >Logout</a
-                >
+                <a class="dropdown-item" href="#logout" @click="logout">
+                  Logout
+                </a>
               </li>
             </ul>
           </li>

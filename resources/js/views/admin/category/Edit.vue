@@ -1,11 +1,12 @@
 <template>
   <div>
+    <h4>Edit Category</h4>
     <div class="card">
-      <div class="card-header d-flex justify-content-between">
-        <router-link to="/categories" class="btn btn-success btn-sm float-right"
-          >Category</router-link
-        >
-        <h3 class="card-title">Edit Category</h3>
+      <div class="card-header">
+        <router-link to="/admin/category" class="btn btn-secondary btn-sm">
+          <i class="bx bx-undo"></i>
+          Back to Category
+        </router-link>
       </div>
       <div class="card-body">
         <form
@@ -14,7 +15,6 @@
           enctype="multipart/form-data"
         >
           <div class="form-row">
-            {{ this.$route.params.id }}
             <div class="col-md-8 mb-3">
               <label for="validationDefault01">Category Name</label>
               <input
@@ -38,8 +38,8 @@
               <select name="parent_id" id="parent_id" class="form-select">
                 <option value=""></option>
                 <option
-                  :key="Parent.id"
                   v-for="Parent in Categories"
+                  :key="Parent.id"
                   :value="Parent.id"
                   :selected="form.parent_id == Parent.id"
                 >
@@ -56,7 +56,6 @@
                 placeholder="Description"
                 v-model="form.description"
                 name="description"
-                required
               />
             </div>
             <div class="col-md-8 mb-3">
@@ -114,7 +113,6 @@
 
 <script>
 import Form from "vform";
-import axios from "axios";
 export default {
   name: "edit",
   data: () => ({
@@ -129,11 +127,11 @@ export default {
   }),
   mounted() {
     this.getCategory();
-    this.$store.dispatch("getCategoriess");
+    this.$store.dispatch("getAll", this.$route.params.id);
   },
   computed: {
     Categories() {
-      return this.$store.getters.categories;
+      return this.$store.getters.category;
     },
   },
   methods: {
@@ -157,11 +155,11 @@ export default {
         });
     },
     getCategory: function () {
-      var slug = this.$route.params.slug;
+      var id = this.$route.params.id;
       axios
-        .get("/api/category/" + slug)
+        .get("/api/category/" + id)
         .then((response) => {
-          this.form.fill(response.data.category);
+          this.form.fill(response.data);
           //   console.log(response.data.category);
         })
         .catch((error) => {

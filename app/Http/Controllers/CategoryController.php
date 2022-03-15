@@ -17,7 +17,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(10);
-        return response()->json($categories,200);
+        return response()->json($categories, 200);
+    }
+
+    public function getAll($id)
+    {
+        return response()->json(Category::all()->except($id), 200);
     }
 
     /**
@@ -53,9 +58,9 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name',
             'status' => 'required'
         ]);
-        
+
         $file_name = null;
-        if($request->image){
+        if ($request->image) {
             $file      = explode(';', $request->image);
             $file      = explode('/', $file[0]);
             $file_ex   = end($file);
@@ -66,7 +71,7 @@ class CategoryController extends Controller
             'slug'        => Str::slug($request->name),
             'description'     => $request->description,
             'status'      => $request->status,
-            'image'         =>$file_name ,
+            'image'         => $file_name,
 
         ]);
         if ($success && $file_name) {
@@ -147,12 +152,12 @@ class CategoryController extends Controller
         $file      = explode('/', $file[0]);
         $file_ex   = end($file);
         $file_name = date('YmdHi') . '.' . $file_ex;
-         $category->image = $file_name;
+        $category->image = $file_name;
         if ($category) {
             Image::make($request->image)->save(public_path('uploades/') . $file_name);
         }
         $category->update();
-        return response()->json(['category', $category],200);
+        return response()->json(['category', $category], 200);
         //  $category->update([
         //     'name' => $request->name,
         //     'slug' => Str::slug($request->name),
@@ -183,37 +188,36 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-
-        $category->delete();
-        return response('Successfully Deleted.');
+        return $category->delete() ? response('Successfully Deleted.') : response('Something went wrong', http_response_code());
     }
-    public function removeitem(Request $request){
-        $sl =0;
-        foreach($request->ids as $id){
-           $category=Category::find($id);
+
+    public function removeitem(Request $request)
+    {
+        $sl = 0;
+        foreach ($request->ids as $id) {
+            $category = Category::find($id);
             $category->delete();
             $sl++;
-
         }
-        $success = $sl>0? true:false;
+        $success = $sl > 0 ? true : false;
         return response()->json([
-            'success'=>$success ,
-            'total'=>$sl
-        ],200);
+            'success' => $success,
+            'total' => $sl
+        ], 200);
     }
-    public function ChangeStatus(Request $request){
-        $sl =0;
-        foreach($request->ids as $id){
-           $category=Category::find($id);
-           $category->status=$request->status;
+    public function ChangeStatus(Request $request)
+    {
+        $sl = 0;
+        foreach ($request->ids as $id) {
+            $category = Category::find($id);
+            $category->status = $request->status;
             $category->update();
             $sl++;
-
         }
-        $success = $sl>0? true:false;
+        $success = $sl > 0 ? true : false;
         return response()->json([
-            'success'=>$success ,
-            'total'=>$sl
-        ],200);
+            'success' => $success,
+            'total' => $sl
+        ], 200);
     }
 }

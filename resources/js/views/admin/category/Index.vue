@@ -36,7 +36,7 @@
               <button
                 @click="ChangeStatus(selected, 0)"
                 type="button"
-                class="dropdown-item text-info py-1"
+                class="dropdown-item py-1"
               >
                 <i class="bx bx-toggle-left me-1"></i>
                 Inactive
@@ -45,7 +45,10 @@
           </div>
         </div>
         <div>
-          <router-link to="/admin/add-category" class="btn btn-primary btn-sm">
+          <router-link
+            to="/admin/category/create"
+            class="btn btn-primary btn-sm"
+          >
             Add Category
           </router-link>
           <router-link
@@ -116,7 +119,7 @@
                   </button>
                   <div class="dropdown-menu" style="">
                     <router-link
-                      :to="`/admin/category/${Category.slug}`"
+                      :to="`/admin/category/${Category.id}`"
                       class="dropdown-item text-primary"
                     >
                       <svg
@@ -206,7 +209,7 @@ export default {
   },
   computed: {
     Categories() {
-      let categories = this.$store.getters.categories;
+      let categories = this.$store.getters.category;
       this.total = categories.last_page ? categories.last_page : 1;
       return categories.data;
     },
@@ -232,8 +235,8 @@ export default {
     fileLink: function (name) {
       return "/uploades/thumbs/" + name;
     },
-    remove(slug) {
-      //   console.log(slug);
+    remove(id) {
+      console.log(id);
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -245,14 +248,15 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete("api/category/" + slug)
-            .then((response) => {
-              this.$store.dispatch("getCategoriess");
+            .delete("/api/category/" + id)
+            .then(() => {
+              //this.$store.dispatch("getCategories");
+              this.paginate(1);
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
             })
             .catch((error) => {
               console.log(error);
             });
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
       });
     },
@@ -285,7 +289,7 @@ export default {
           this.selected = [];
           this.selectAll = false;
           this.Isselected = false;
-          this.$store.dispatch("getCategoriess");
+          this.$store.dispatch("getCategories");
         })
         .catch((error) => {});
     },
@@ -300,7 +304,7 @@ export default {
           Swal.fire(
             response.data.total + "  Category has been  Successfully " + msg
           );
-          this.$store.dispatch("getCategoriess");
+          this.$store.dispatch("getCategories");
           this.selected = [];
           this.selectAll = false;
         });
