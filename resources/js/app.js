@@ -5,6 +5,7 @@ import Admin from "./Admin.vue";
 import router from "./router";
 import store from "./store";
 import brand from "./store/modules/brand";
+import vendor from "./store/modules/vendor";
 // vform
 import Form from "vform";
 window.Form = Form;
@@ -32,5 +33,6 @@ const app = new Vue({
     store,
     router,
     brand,
+    vendor,
     components: { App, Admin },
 });

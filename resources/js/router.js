@@ -14,6 +14,10 @@ import EditCategory from "./views/admin/category/Edit.vue";
 import Brand from "./views/admin/brand/Index.vue";
 import AddBrand from "./views/admin/brand/Create.vue";
 import EditBrand from "./views/admin/brand/Edit.vue";
+// Vendor
+import Vendor from "./views/admin/Vendor/Index.vue";
+import AddVendor from "./views/admin/Vendor/Create.vue";
+// import EditBrand from "./views/vendor/brand/Edit.vue";
 Vue.use(VueRouter);
 const routes = [
     { path: "*", component: NotFound },
@@ -47,6 +51,18 @@ const routes = [
         component: EditBrand,
         name: "editBrand",
     },
+    // vendors
+    { path: "/admin/vendors", component: Vendor, name: "Vendor" },
+    {
+        path: "/admin/add-brand",
+        component: AddVendor,
+        name: "AddVendor",
+    },
+    // {
+    //     path: "/admin/edit-brand/:slug",
+    //     component: EditBrand,
+    //     name: "editBrand",
+    // },
 ];
 
 const router = new VueRouter({
