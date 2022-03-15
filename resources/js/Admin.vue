@@ -100,13 +100,23 @@
         <div class="menu-inner-shadow" style="display: block"></div>
 
         <ul class="menu-inner py-1 ps ps--active-y">
-          <router-link tag="li" to="/admin/dashboard" class="menu-item">
+          <router-link
+            tag="li"
+            to="/admin/dashboard"
+            class="menu-item"
+            v-if="loggedIn"
+          >
             <a class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
               Dashboard
             </a>
           </router-link>
-          <router-link tag="li" to="/admin/category" class="menu-item">
+          <router-link
+            tag="li"
+            to="/admin/category"
+            class="menu-item"
+            v-if="loggedIn"
+          >
             <a class="menu-link">
               <i class="menu-icon tf-icons bx bx-layout"></i>
               Category
@@ -317,6 +327,7 @@ export default {
     ...mapGetters({
       loggedIn: "auth/loggedIn",
     }),
+
     currentUser: {
       get() {
         return this.$store.state.auth.user;

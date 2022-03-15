@@ -14,11 +14,11 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('admin', function () {
+Route::middleware('auth:sanctum')->get('admin', function () {
   return view('admin');
 });
 
-Route::get('admin/{any}', function () {
+Route::middleware('auth:sanctum')->get('admin/{any}', function () {
   return view('admin');
 })->where('any', '.*');
 

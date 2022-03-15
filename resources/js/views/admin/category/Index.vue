@@ -1,7 +1,6 @@
 <template>
   <div>
     <h3 class="card-title">Category</h3>
-    <router-view />
     <div class="card">
       <div class="card-header d-flex justify-content-between">
         <div v-if="!emptyData()">
@@ -185,7 +184,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "category",
   data() {

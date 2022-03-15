@@ -4,7 +4,7 @@ import EditCategory from "./Edit.vue";
 import Index from "./Index.vue";
 
 const routes = [
-    { path: "/admin/category", component: Index },
+    { path: "/admin/category", component: Index, meta: { requireAuth: true } },
     { path: "/admin/category/create", component: Addcategory },
     { path: "/admin/category/:id", component: ViewCategory },
     { path: "/admin/category/:id/edit", component: EditCategory },
