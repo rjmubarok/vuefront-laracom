@@ -35,6 +35,7 @@ Route::get('/orders', [OrderController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
 
   Route::get('currentUser', [UserController::class, 'currentUser']);
+  Route::get('rolePermissions', [UserController::class, 'rolePermissions']);
   Route::post('logout', [UserController::class, 'logout']);
 
   //user routes
@@ -42,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
   //category routes
   Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
-//   Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
+  //   Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
   Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
   Route::get('category/{slug}', [CategoryController::class, 'show'])->middleware('permission:delete-category');
 

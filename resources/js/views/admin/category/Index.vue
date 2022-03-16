@@ -51,7 +51,7 @@
             Add Category
           </router-link>
           <router-link
-            to="/admin/category/create"
+            to="/admin/category/createbulk"
             class="btn btn-primary btn-sm"
           >
             Add Bulk Category

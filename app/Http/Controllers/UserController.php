@@ -23,7 +23,15 @@ class UserController extends Controller
     {
         return Auth::user();
     }
-    public function logout(Request $request) {
+
+    public function rolePermissions()
+    {
+        return response(['role' => Auth::user()->getRoleNames(), 'permissions' => Auth::user()->permissions]);
+    }
+
+
+    public function logout(Request $request)
+    {
         $request->user()->tokens()->delete();
     }
 
