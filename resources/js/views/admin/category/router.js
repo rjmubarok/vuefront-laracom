@@ -12,6 +12,11 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: "/admin/category/createbulk",
+        component: BulkCreate,
+        meta: { requiresAuth: true },
+    },
+    {
         path: "/admin/category/:id",
         component: ViewCategory,
         meta: { requiresAuth: true },
@@ -19,11 +24,6 @@ const routes = [
     {
         path: "/admin/category/:id/edit",
         component: EditCategory,
-        meta: { requiresAuth: true },
-    },
-    {
-        path: "/admin/category/createbulk",
-        component: BulkCreate,
         meta: { requiresAuth: true },
     },
 ];

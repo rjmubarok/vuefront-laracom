@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Hamcrest\Arrays\IsArray;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
@@ -30,9 +31,29 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createBulk(Request $request)
     {
-        //
+        $request->validate(([
+            'name' => 'required'
+        ]));
+
+        $names = explode(",", $request->name);
+
+        if (is_array($names)) {
+            $n = 0;
+            foreach ($names as $name) {
+                echo $name;
+                if (!empty($name)) {
+                    Category::insert([
+                        'name' => $name,
+                        'slug' => Str::slug($name)
+                    ]);
+                    $n++;
+                }
+            }
+        }
+
+        return response()->json($n . " categories inserted.");
     }
 
     /**

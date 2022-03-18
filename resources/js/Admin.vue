@@ -199,9 +199,13 @@
                           <span class="fw-semibold d-block">{{
                             currentUser.name
                           }}</span>
-                          <small class="text-muted">{{
-                            rolePermissions.role[0]
-                          }}</small>
+                          <small class="text-muted">
+                            {{
+                              rolePermissions.role
+                                ? rolePermissions.role[0]
+                                : null
+                            }}
+                          </small>
                         </div>
                       </div>
                     </a>

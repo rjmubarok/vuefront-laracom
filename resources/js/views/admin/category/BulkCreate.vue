@@ -22,7 +22,7 @@
                 type="text"
                 class="form-control"
                 id="validationDefault01"
-                placeholder="Category Name"
+                placeholder='Category Names separated by comma ","'
                 v-model="form.name"
                 name="name"
                 required
@@ -51,19 +51,16 @@
 <script>
 import Form from "vform";
 export default {
-  name: "create",
+  name: "createBulk",
   data: () => ({
     form: new Form({
       name: null,
-      description: null,
-      status: 1,
-      image: null,
     }),
   }),
   methods: {
     addCategory: function () {
       this.form
-        .post("/api/category")
+        .post("/api/category/createBulk")
         .then((response) => {
           Swal.fire({
             position: "top",
@@ -73,31 +70,12 @@ export default {
             timer: 1500,
           });
           this.form.name = null;
-          this.form.description = null;
-          this.form.status = null;
-          this.form.image = "";
-          this.$router.push("/admin/category");
+          //this.$router.push("/admin/category");
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    loadeimage: function (e) {
-      let test = this;
-      let file = e.target.files[0];
-      const filereader = new FileReader();
-      filereader.onload = function (e) {
-        // console.log(e.target.result);
-        test.form.image = e.target.result;
-      };
-      filereader.readAsDataURL(file);
-    },
-  },
-  fileLink: function (name) {
-    return "uploades/" + name;
-  },
-  mounted() {
-    // this.addCategory();
   },
 };
 </script>
