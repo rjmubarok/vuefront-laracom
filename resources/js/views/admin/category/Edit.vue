@@ -38,7 +38,7 @@
               <select name="parent_id" id="parent_id" class="form-select">
                 <option value=""></option>
                 <option
-                  v-for="Parent in category"
+                  v-for="Parent in Categories"
                   :key="Parent.id"
                   :value="Parent.id"
                   :selected="form.parent_id == Parent.id"
@@ -113,7 +113,6 @@
 
 <script>
 import Form from "vform";
-import { mapGetters } from "vuex";
 export default {
   name: "edit",
   data: () => ({
@@ -131,15 +130,16 @@ export default {
     this.$store.dispatch("getAll", this.$route.params.id);
   },
   computed: {
-    ...mapGetters({ category }),
+    Categories() {
+      this.$store.getters.categories;
+    },
   },
   methods: {
     updateCategory: function () {
       var id = this.$route.params.id;
       this.form
-        .put("/update-category/" + id)
-        .then((response) => {
-          console.log(response);
+        .put("/api/category/" + id)
+        .then(() => {
           Swal.fire({
             position: "top",
             icon: "success",

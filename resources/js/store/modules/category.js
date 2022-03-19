@@ -1,10 +1,14 @@
 export default {
     state: {
-        categotyData: [],
+        category: {},
+        categories: [],
     },
     getters: {
         category(state) {
-            return state.categotyData;
+            return state.category;
+        },
+        categories(state) {
+            return state.categories;
         },
     },
     actions: {
@@ -12,7 +16,7 @@ export default {
             await axios
                 .get("/api/category/all/" + id)
                 .then((response) => {
-                    commit("category", response.data);
+                    commit("categories", response.data);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -22,7 +26,7 @@ export default {
             axios
                 .get("/api/category?page=" + page)
                 .then((response) => {
-                    commit("category", response.data);
+                    commit("categories", response.data);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -41,7 +45,10 @@ export default {
     },
     mutations: {
         category(state, data) {
-            return (state.categotyData = data);
+            return (state.category = data);
+        },
+        categories(state, data) {
+            return (state.categories = data);
         },
     },
 };

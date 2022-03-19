@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
   //category routes
   Route::post('category', [CategoryController::class, 'store'])->middleware('permission:create-category');
   Route::post('category/createBulk', [CategoryController::class, 'createBulk'])->middleware('permission:create-category');
-  //   Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
+  Route::put('category/{category}', [CategoryController::class, 'update'])->middleware('permission:update-category');
   Route::delete('category/{category}', [CategoryController::class, 'destroy'])->middleware('permission:delete-category');
   Route::get('category/{slug}', [CategoryController::class, 'show'])->middleware('permission:delete-category');
 

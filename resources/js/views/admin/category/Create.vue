@@ -34,6 +34,20 @@
               />
             </div>
             <div class="col-md-8 mb-3">
+              <label for="validationDefault02">Parent Category</label>
+              <select name="parent_id" id="parent_id" class="form-select">
+                <option value=""></option>
+                <option
+                  v-for="Parent in Categories"
+                  :key="Parent.id"
+                  :value="Parent.id"
+                  :selected="form.parent_id == Parent.id"
+                >
+                  {{ Parent.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-8 mb-3">
               <label for="validationDefault02">Description</label>
               <input
                 type="text"
@@ -109,6 +123,15 @@ export default {
       image: null,
     }),
   }),
+  mounted() {
+    this.getCategory();
+    this.$store.dispatch("getAll");
+  },
+  computed: {
+    Categories() {
+      this.$store.getters.category;
+    },
+  },
   methods: {
     addCategory: function () {
       this.form
@@ -144,9 +167,6 @@ export default {
   },
   fileLink: function (name) {
     return "uploades/" + name;
-  },
-  mounted() {
-    // this.addCategory();
   },
 };
 </script>

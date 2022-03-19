@@ -42,7 +42,7 @@ class CategoryController extends Controller
         if (is_array($names)) {
             $n = 0;
             foreach ($names as $name) {
-                echo $name;
+                $name = trim($name);
                 if (!empty($name)) {
                     Category::insert([
                         'name' => $name,
@@ -163,21 +163,24 @@ class CategoryController extends Controller
             'name' => "required|unique:categories,name,$category->id",
             'status' => 'required',
         ]);
+
         $category = Category::find($request->id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->status = $request->status;
         $category->description = $request->description;
 
-        $file      = explode(';', $request->image);
-        $file      = explode('/', $file[0]);
-        $file_ex   = end($file);
-        $file_name = date('YmdHi') . '.' . $file_ex;
-        $category->image = $file_name;
-        if ($category) {
+        if ($request->image) {
+            $file      = explode(';', $request->image);
+            $file      = explode('/', $file[0]);
+            $file_ex   = end($file);
+            $file_name = date('YmdHi') . '.' . $file_ex;
             Image::make($request->image)->save(public_path('uploades/') . $file_name);
+            $category->image = $file_name;
         }
+
         $category->update();
+
         return response()->json(['category', $category], 200);
         //  $category->update([
         //     'name' => $request->name,

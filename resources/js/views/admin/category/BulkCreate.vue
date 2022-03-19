@@ -22,7 +22,7 @@
                 type="text"
                 class="form-control"
                 id="validationDefault01"
-                placeholder='Category Names separated by comma ","'
+                placeholder='Category names (separated by comma ",")'
                 v-model="form.name"
                 name="name"
                 required
@@ -35,12 +35,12 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" :disabled="form.busy" class="btn btn-info">
+            <button type="submit" :disabled="form.busy" class="btn btn-primary">
               Save Category
             </button>
-            <button type="reset" class="btn btn-default float-right">
+            <router-link to="/admin/category" class="btn btn-default">
               Cancel
-            </button>
+            </router-link>
           </div>
         </form>
       </div>
