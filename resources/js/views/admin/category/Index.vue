@@ -166,7 +166,7 @@
       <div class="card-footer clearfix" v-if="!emptyData()">
         <paginate
           :page-count="total"
-          :click-handler="paginate"
+          :click-handler="page"
           :prev-text="'<i class=\'tf-icon bx bx-chevrons-left\'></i>'"
           :prev-class="'page-item prev'"
           :prev-link-class="'page-link'"
@@ -184,6 +184,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "category",
   data() {
@@ -197,7 +198,7 @@ export default {
 
   mounted() {
     this.emptyData();
-    this.$store.dispatch("getCategories", 1); // default page no 1
+    this.$store.dispatch("category/getPaginate", 1); // default page no 1
   },
   watch: {
     selected: function (selected) {
@@ -206,15 +207,18 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      paginate: "category/paginate",
+    }),
     Categories() {
-      let categories = this.$store.getters.category;
-      this.total = categories.last_page ? categories.last_page : 1;
-      return categories.data;
+      let paginate = this.$store.state.category.paginate;
+      this.total = paginate.last_page ? paginate.last_page : 1;
+      return paginate.data;
     },
   },
   methods: {
-    paginate: function (pageNum) {
-      this.$store.dispatch("getCategories", pageNum);
+    page: function (pageNum) {
+      this.$store.dispatch("category/getPaginate", pageNum);
     },
     statusname(status) {
       let data = {

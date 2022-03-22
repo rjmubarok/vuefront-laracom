@@ -35,15 +35,20 @@
             <input type="hidden" v-model="form.id" />
             <div class="col-md-8 mb-3">
               <label for="validationDefault02">Parent Category</label>
-              <select name="parent_id" id="parent_id" class="form-select">
+              <select
+                name="parent_id"
+                id="parent_id"
+                class="form-select"
+                v-model="form.parent_id"
+              >
                 <option value=""></option>
                 <option
-                  v-for="Parent in Categories"
-                  :key="Parent.id"
-                  :value="Parent.id"
-                  :selected="form.parent_id == Parent.id"
+                  v-for="parent in categories"
+                  :key="parent.id"
+                  :value="parent.id"
+                  :selected="form.parent_id == parent.id"
                 >
-                  {{ Parent.name }}
+                  {{ parent.name }}
                 </option>
               </select>
             </div>
@@ -113,6 +118,7 @@
 
 <script>
 import Form from "vform";
+import { mapGetters } from "vuex";
 export default {
   name: "edit",
   data: () => ({
@@ -127,12 +133,12 @@ export default {
   }),
   mounted() {
     this.getCategory();
-    this.$store.dispatch("getAll", this.$route.params.id);
+    this.$store.dispatch("category/getAll", this.$route.params.id);
   },
   computed: {
-    Categories() {
-      this.$store.getters.categories;
-    },
+    ...mapGetters({
+      categories: "category/all",
+    }),
   },
   methods: {
     updateCategory: function () {

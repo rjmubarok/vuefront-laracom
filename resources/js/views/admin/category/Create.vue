@@ -38,12 +38,12 @@
               <select name="parent_id" id="parent_id" class="form-select">
                 <option value=""></option>
                 <option
-                  v-for="Parent in Categories"
-                  :key="Parent.id"
-                  :value="Parent.id"
-                  :selected="form.parent_id == Parent.id"
+                  v-for="parent in categories"
+                  :key="parent.id"
+                  :value="parent.id"
+                  :selected="form.parent_id == parent.id"
                 >
-                  {{ Parent.name }}
+                  {{ parent.name }}
                 </option>
               </select>
             </div>
@@ -113,6 +113,7 @@
 
 <script>
 import Form from "vform";
+import { mapGetters } from "vuex";
 export default {
   name: "create",
   data: () => ({
@@ -124,13 +125,12 @@ export default {
     }),
   }),
   mounted() {
-    this.getCategory();
-    this.$store.dispatch("getAll");
+    this.$store.dispatch("category/getAll");
   },
   computed: {
-    Categories() {
-      this.$store.getters.category;
-    },
+    ...mapGetters({
+      categories: "category/all",
+    }),
   },
   methods: {
     addCategory: function () {
