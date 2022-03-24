@@ -34,7 +34,7 @@
             </div>
             <input type="hidden" v-model="form.id" />
             <div class="col-md-8 mb-3">
-              <label for="validationDefault02">Parent Category</label>
+              <label for="parent_id">Parent Category</label>
               <select
                 name="parent_id"
                 id="parent_id"
@@ -141,9 +141,9 @@ export default {
     }),
   },
   methods: {
-    updateCategory: function () {
+    async updateCategory() {
       var id = this.$route.params.id;
-      this.form
+      await this.form
         .put("/api/category/" + id)
         .then(() => {
           Swal.fire({

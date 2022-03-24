@@ -253,7 +253,7 @@ export default {
             .delete("/api/category/" + id)
             .then(() => {
               //this.$store.dispatch("getCategories");
-              this.paginate(1);
+              this.page(1);
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             })
             .catch((error) => {

@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::select('categories.*', 'parent.name as parent')->leftjoin('categories as parent', 'parent.id', '=', 'categories.parent_id')->paginate(10);
         return response()->json($categories, 200);
     }
 
@@ -71,29 +71,28 @@ class CategoryController extends Controller
          * slug (string compulsory)
          * description (string nullable)
          * image (string nullable)
-         * active (binary default 1)
+         * status (binary default 1)
          * parent_id (nullable)
          */
         $success = false;
         $request->validate([
             'name' => 'required|unique:categories,name',
-            'status' => 'required'
         ]);
 
         $file_name = null;
-        if ($request->image) {
+        if ($request->hasfile('image')) {
             $file      = explode(';', $request->image);
             $file      = explode('/', $file[0]);
             $file_ex   = end($file);
             $file_name = date('YmdHi') . '.' . $file_ex;
         }
         $success = Category::create([
-            'name'       => $request->name,
-            'slug'        => Str::slug($request->name),
-            'description'     => $request->description,
-            'status'      => $request->status,
+            'name'          => $request->name,
+            'slug'          => Str::slug($request->name),
+            'description'   => $request->description,
+            'status'        => $request->status,
+            'parent_id'     => $request->parent_id,
             'image'         => $file_name,
-
         ]);
         if ($success && $file_name) {
             Image::make($request->image)->save(public_path('uploades/') . $file_name);
@@ -161,7 +160,6 @@ class CategoryController extends Controller
 
         $request->validate([
             'name' => "required|unique:categories,name,$category->id",
-            'status' => 'required',
         ]);
 
         $category = Category::find($request->id);
@@ -169,8 +167,9 @@ class CategoryController extends Controller
         $category->slug = Str::slug($request->name);
         $category->status = $request->status;
         $category->description = $request->description;
+        $category->parent_id = $request->parent_id;
 
-        if ($request->image) {
+        if ($request->hasFile('image')) {
             $file      = explode(';', $request->image);
             $file      = explode('/', $file[0]);
             $file_ex   = end($file);
