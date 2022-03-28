@@ -3,11 +3,11 @@
     <h3 class="card-title">Category</h3>
     <div class="card">
       <div class="card-header d-flex justify-content-between">
-        <div v-if="!emptyData()">
+        <div v-if="Categories">
           <div class="dropdown">
             <button
               class="btn btn-info btn-sm dropdown-toggle"
-              :disabled="!Isselected"
+              :disabled="!isSelected"
               type="button"
               id="dropdownMenuButton"
               data-bs-toggle="dropdown"
@@ -60,14 +60,14 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <table class="table" v-if="!emptyData()">
+        <table class="table" v-if="Categories">
           <thead>
             <tr>
               <th>
                 <div class="form-check">
                   <input
                     class="form-check-input"
-                    :disabled="emptyData()"
+                    :disabled="!Categories"
                     type="checkbox"
                     @click="selectAll()"
                     v-model="selectedAll"
@@ -99,11 +99,8 @@
               </td>
               <td>{{ Category.parent }}</td>
               <td>
-                <span
-                  class="badge rounded-pill"
-                  :class="statuscolor(Category.status)"
-                >
-                  {{ statusname(Category.status) }}</span
+                <span class="badge" :class="statusColor(Category.status)">
+                  {{ statusName(Category.status) }}</span
                 >
               </td>
               <td>
@@ -163,10 +160,10 @@
         </div>
       </div>
       <!-- /.card-body -->
-      <div class="card-footer clearfix" v-if="!emptyData()">
+      <div class="card-footer clearfix" v-if="Categories">
         <paginate
           :page-count="total"
-          :click-handler="page"
+          :click-handler="paginationHandler"
           :prev-text="'<i class=\'tf-icon bx bx-chevrons-left\'></i>'"
           :prev-class="'page-item prev'"
           :prev-link-class="'page-link'"
@@ -192,17 +189,16 @@ export default {
       total: 1,
       selected: [],
       selectedAll: false,
-      Isselected: false,
+      isSelected: false,
     };
   },
 
   mounted() {
-    this.emptyData();
     this.$store.dispatch("category/getPaginate", 1); // default page no 1
   },
   watch: {
     selected: function (selected) {
-      this.Isselected = selected.length > 0;
+      this.isSelected = selected.length > 0;
       this.selectedAll = selected.length == this.Categories.length;
     },
   },
@@ -217,28 +213,19 @@ export default {
     },
   },
   methods: {
-    page: function (pageNum) {
+    paginationHandler: function (pageNum) {
       this.$store.dispatch("category/getPaginate", pageNum);
     },
-    statusname(status) {
-      let data = {
-        0: "Inactive",
-        1: "active",
-      };
-      return data[status];
+    statusName(status) {
+      return status == 1 ? "Active" : "Inactive";
     },
-    statuscolor(status) {
-      let data = {
-        0: "bg-secondary",
-        1: "bg-success",
-      };
-      return data[status];
+    statusColor(status) {
+      return status == 1 ? "bg-label-primary" : "bg-label-secondary";
     },
     fileLink: function (name) {
       return "/uploades/thumbs/" + name;
     },
     remove(id) {
-      console.log(id);
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -252,8 +239,7 @@ export default {
           axios
             .delete("/api/category/" + id)
             .then(() => {
-              //this.$store.dispatch("getCategories");
-              this.page(1);
+              this.$store.dispatch("category/getPaginate", 1);
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             })
             .catch((error) => {
@@ -261,9 +247,6 @@ export default {
             });
         }
       });
-    },
-    emptyData() {
-      return this.Categories ? this.Categories.length < 1 : true;
     },
     selectAll: function () {
       if (event.target.checked === false) {
@@ -290,10 +273,12 @@ export default {
           );
           this.selected = [];
           this.selectAll = false;
-          this.Isselected = false;
+          this.isSelected = false;
           this.$store.dispatch("getCategories");
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+        });
     },
     ChangeStatus: function (selected, status) {
       let msg = status === 1 ? "Active" : "Inactive";
@@ -306,7 +291,7 @@ export default {
           Swal.fire(
             response.data.total + "  Category has been  Successfully " + msg
           );
-          this.$store.dispatch("getCategories");
+          this.$store.dispatch("category/getPaginate", 1);
           this.selected = [];
           this.selectAll = false;
         });

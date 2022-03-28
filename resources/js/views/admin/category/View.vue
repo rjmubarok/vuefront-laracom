@@ -15,52 +15,66 @@
         </router-link>
       </div>
       <div class="card-body">
-        <table class="table">
-          <tr>
-            <td>ID</td>
-            <td>{{ category.id }}</td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>{{ category.name }}</td>
-          </tr>
-          <tr>
-            <td>Slug</td>
-            <td>{{ category.slug }}</td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td>{{ category.description }}</td>
-          </tr>
-
-          <tr>
-            <td>Parent Category</td>
-            <td>{{ category.parent_id }}</td>
-          </tr>
-          <tr>
-            <td>Image</td>
-            <td>{{ category.image }}</td>
-          </tr>
-          <tr>
-            <td>Status</td>
-            <td>{{ category.status }}</td>
-          </tr>
-          <tr>
-            <td>Created at</td>
-            <td>{{ category.created_at }}</td>
-          </tr>
-          <tr>
-            <td>Updated at</td>
-            <td>{{ category.updated_at }}</td>
-          </tr>
-        </table>
+        <div class="row">
+          <div class="col-md-6">
+            <img
+              :src="'/uploades/' + category.image"
+              :alt="category.name"
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-md-6">
+            <table class="table table-borderless">
+              <tbody>
+                <tr>
+                  <td>ID</td>
+                  <td>{{ category.id }}</td>
+                </tr>
+                <tr>
+                  <td>Name</td>
+                  <td>{{ category.name }}</td>
+                </tr>
+                <tr>
+                  <td>Slug</td>
+                  <td>{{ category.slug }}</td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <td>{{ category.description }}</td>
+                </tr>
+                <tr>
+                  <td>Parent Category</td>
+                  <td>{{ category.parent_id }}</td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td>{{ category.status }}</td>
+                </tr>
+                <tr>
+                  <td>Created at</td>
+                  <td>{{ category.created_at }}</td>
+                </tr>
+                <tr>
+                  <td>Updated at</td>
+                  <td>{{ category.updated_at }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="card card-body mt-3">
+      <h4>Product by Category</h4>
+      <product-by-category :id="category.id" />
     </div>
   </div>
 </template>
 
 <script>
+import ProductByCategory from "../../../components/ProductByCategory.vue";
 export default {
+  components: { ProductByCategory },
   name: "Viewcategory",
   data: () => ({
     category: [],
