@@ -95,8 +95,8 @@ class CategoryController extends Controller
             'image'         => $file_name,
         ]);
         if ($success && $file_name) {
-            Image::make($request->image)->save(public_path('uploades/') . $file_name);
-            Image::make($request->image)->resize(320, 240)->save(public_path('uploades/thumbs/') . $file_name);
+            Image::make($request->image)->save(public_path('storage/category/') . $file_name);
+            Image::make($request->image)->resize(320, 240)->save(public_path('storage/category/thumbs/') . $file_name);
         }
         return response()->json([
             'success' => $success,
