@@ -169,7 +169,7 @@ export default {
     },
   },
   fileLink: function (name) {
-    return "uploades/" + name;
+    return "storage/category/" + name;
   },
 };
 </script>

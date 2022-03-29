@@ -131,3 +131,7 @@
         transform: rotate(360deg);
     }
 }
+
+.dropdown-menu {
+    margin: 0;
+}

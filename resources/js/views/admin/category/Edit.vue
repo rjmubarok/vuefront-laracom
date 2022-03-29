@@ -64,18 +64,27 @@
               />
             </div>
             <div class="col-md-8 mb-3">
-              <label for="validationDefault02">Image</label>
-              <input
-                type="file"
-                class="form-control"
-                id="image"
-                :v-model="form.image"
-                name="image"
-                @change="loadeimage($event)"
-              />
-            </div>
-            <div class="col-md-3">
-              <img :src="form.image" alt="" height="70px" class="float-right" />
+              <div class="row">
+                <div class="col-md-9">
+                  <label for="validationDefault02">Image</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="image"
+                    :v-model="form.image"
+                    name="image"
+                    @change="loadeimage($event)"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <img
+                    :src="form.image"
+                    alt=""
+                    height="70px"
+                    class="img-fluid mt-3"
+                  />
+                </div>
+              </div>
             </div>
 
             <div class="form-group row">
@@ -165,7 +174,7 @@ export default {
         .get("/api/category/" + id)
         .then((response) => {
           this.form.fill(response.data);
-          //   console.log(response.data.category);
+          this.form.image = "/storage/category/thumbs/" + response.data.image;
         })
         .catch((error) => {
           console.log(error);
@@ -176,14 +185,13 @@ export default {
       let file = e.target.files[0];
       const filereader = new FileReader();
       filereader.onload = function (e) {
-        // console.log(e.target.result);
         test.form.image = e.target.result;
       };
       filereader.readAsDataURL(file);
     },
   },
   fileLink: function (name) {
-    return "uploades/" + name;
+    return "storage/category/" + name;
   },
 };
 </script>

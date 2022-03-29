@@ -18,9 +18,16 @@
         <div class="row">
           <div class="col-md-6">
             <img
-              :src="'/uploades/' + category.image"
+              :src="'/storage/category/' + category.image"
               :alt="category.name"
               class="img-fluid"
+              v-if="category.image"
+            />
+            <img
+              :src="'/storage/category/default.png'"
+              :alt="category.name"
+              class="img-fluid"
+              v-else
             />
           </div>
           <div class="col-md-6">
@@ -77,7 +84,7 @@ export default {
   components: { ProductByCategory },
   name: "Viewcategory",
   data: () => ({
-    category: [],
+    category: {},
   }),
   methods: {
     getcategory: function () {
