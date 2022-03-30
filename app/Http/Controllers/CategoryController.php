@@ -78,13 +78,12 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|unique:categories,name',
         ]);
-
         $file_name = null;
-        if ($request->hasfile('image')) {
+        if ($request->image) {
             $file      = explode(';', $request->image);
             $file      = explode('/', $file[0]);
             $file_ex   = end($file);
-            $file_name = date('YmdHi') . '.' . $file_ex;
+            $file_name = uniqid() . '.' . $file_ex;
         }
         $success = Category::create([
             'name'          => $request->name,
@@ -162,45 +161,24 @@ class CategoryController extends Controller
             'name' => "required|unique:categories,name,$category->id",
         ]);
 
-        $category = Category::find($request->id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->status = $request->status;
         $category->description = $request->description;
         $category->parent_id = $request->parent_id;
-
-        if ($request->hasFile('image')) {
+        if ($request->image) {
             $file      = explode(';', $request->image);
             $file      = explode('/', $file[0]);
             $file_ex   = end($file);
-            $file_name = date('YmdHi') . '.' . $file_ex;
-            Image::make($request->image)->save(public_path('uploades/') . $file_name);
+            $file_name = uniqid() . '.' . $file_ex;
+            Image::make($request->image)->save(public_path('storage/category/') . $file_name);
+            Image::make($request->image)->resize(320, 240)->save(public_path('storage/category/thumbs/') . $file_name);
             $category->image = $file_name;
         }
 
         $category->update();
 
-        return response()->json(['category', $category], 200);
-        //  $category->update([
-        //     'name' => $request->name,
-        //     'slug' => Str::slug($request->name),
-        //     'description' => $request->description,
-        //     'image' => $request->image,
-        //     'status'=>$request->status,
-        //     'parent_id' => $request->parent_id,
-
-        // ]);
-        // // $file      = explode(';', $request->image);
-        // // $file      = explode('/', $file[0]);
-        // // $file_ex   = end($file);
-        // // $file_name = date('YmdHi') . '.' . $file_ex;
-        // //  $category->image = $file_name;
-        // // if ($category) {
-        // //     Image::make($request->image)->save(public_path('uploades/') . $file_name);
-        // // }
-        // return response()->json([
-        //     'category' => $category,
-        // ], 200);
+        return response()->json($category, 200);
     }
 
     /**

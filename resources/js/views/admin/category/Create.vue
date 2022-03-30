@@ -66,6 +66,7 @@
               <label for="validationDefault02">Image</label>
               <input
                 type="file"
+                accept="image/*"
                 class="form-control"
                 id="image"
                 :v-model="form.image"

@@ -216,6 +216,7 @@ export default {
   },
   methods: {
     paginationHandler: function (pageNum) {
+      this.selected = [];
       this.$store.dispatch("category/getPaginate", pageNum);
     },
     statusName(status) {

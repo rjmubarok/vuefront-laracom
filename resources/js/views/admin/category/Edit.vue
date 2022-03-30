@@ -69,6 +69,7 @@
                   <label for="validationDefault02">Image</label>
                   <input
                     type="file"
+                    accept="image/*"
                     class="form-control"
                     id="image"
                     :v-model="form.image"
@@ -82,6 +83,14 @@
                     alt=""
                     height="70px"
                     class="img-fluid mt-3"
+                    v-if="form.image"
+                  />
+                  <img
+                    :src="prev_image"
+                    alt=""
+                    height="70px"
+                    class="img-fluid mt-3"
+                    v-else
                   />
                 </div>
               </div>
@@ -139,6 +148,7 @@ export default {
       status: 1,
       image: null,
     }),
+    prev_image: null,
   }),
   mounted() {
     this.getCategory();
@@ -174,7 +184,8 @@ export default {
         .get("/api/category/" + id)
         .then((response) => {
           this.form.fill(response.data);
-          this.form.image = "/storage/category/thumbs/" + response.data.image;
+          this.form.image = null;
+          this.prev_image = "/storage/category/thumbs/" + response.data.image;
         })
         .catch((error) => {
           console.log(error);
