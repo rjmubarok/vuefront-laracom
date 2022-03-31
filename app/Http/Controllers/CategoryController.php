@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Hamcrest\Arrays\IsArray;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
 
@@ -31,7 +31,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createBulk(Request $request)
+    public function bulkcreate(Request $request)
     {
         $request->validate(([
             'name' => 'required'
@@ -160,7 +160,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => "required|unique:categories,name,$category->id",
         ]);
-
+        //Storage::delete(['category/' . $category->image, 'category/thumbs/' . $category->image]);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->status = $request->status;
@@ -173,6 +173,10 @@ class CategoryController extends Controller
             $file_name = uniqid() . '.' . $file_ex;
             Image::make($request->image)->save(public_path('storage/category/') . $file_name);
             Image::make($request->image)->resize(320, 240)->save(public_path('storage/category/thumbs/') . $file_name);
+
+            if ($category->image) {
+                Storage::delete(['public/category/' . $category->image, 'public/category/thumbs/' . $category->image]);
+            }
             $category->image = $file_name;
         }
 
@@ -189,36 +193,31 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        return $category->delete() ? response('Successfully Deleted.') : response('Something went wrong', http_response_code());
+        $image = $category->image;
+        $deleted = $category->delete();
+        if ($image && $deleted) {
+            Storage::delete(['public/category/' . $image, 'public/category/thumbs/' . $image]);
+        }
+        return $deleted ? response('Successfully Deleted.') : response('Something went wrong', http_response_code());
     }
 
-    public function removeitem(Request $request)
+    public function bulkdelete(Request $request)
     {
-        $sl = 0;
         foreach ($request->ids as $id) {
             $category = Category::find($id);
-            $category->delete();
-            $sl++;
+            $image = $category->image;
+            $deleted = $category->delete();
+            if ($image && $deleted) {
+                Storage::delete(['public/category/' . $image, 'public/category/thumbs/' . $image]);
+            }
         }
-        $success = $sl > 0 ? true : false;
-        return response()->json([
-            'success' => $success,
-            'total' => $sl
-        ], 200);
+        return response()->json(count($request->ids));
     }
-    public function ChangeStatus(Request $request)
+
+    public function changestatus(Request $request)
     {
-        $sl = 0;
-        foreach ($request->ids as $id) {
-            $category = Category::find($id);
-            $category->status = $request->status;
-            $category->update();
-            $sl++;
-        }
-        $success = $sl > 0 ? true : false;
-        return response()->json([
-            'success' => $success,
-            'total' => $sl
-        ], 200);
+        return Category::whereIn('id', $request->ids)->update(['status' =>  $request->status]) ?
+            response()->json(count($request->ids)) :
+            response()->json(0);
     }
 }

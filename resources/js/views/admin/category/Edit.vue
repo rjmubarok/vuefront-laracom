@@ -124,9 +124,9 @@
             <button type="submit" :disabled="form.busy" class="btn btn-info">
               Update Category
             </button>
-            <button type="reset" class="btn btn-default float-right">
+            <router-link to="/admin/category" class="btn btn-default">
               Cancel
-            </button>
+            </router-link>
           </div>
         </form>
       </div>

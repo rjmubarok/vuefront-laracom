@@ -84,9 +84,9 @@
                 </g>
               </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2"
-              >Vuefront Laracom</span
-            >
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">
+              Vuefront Laracom
+            </span>
           </router-link>
 
           <a

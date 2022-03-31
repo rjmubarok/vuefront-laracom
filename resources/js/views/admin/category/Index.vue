@@ -17,7 +17,7 @@
             </button>
             <div class="dropdown-menu">
               <button
-                @click="removeitems(selected)"
+                @click="bulkDelete(selected)"
                 type="button"
                 class="dropdown-item text-danger py-1"
               >
@@ -58,7 +58,6 @@
           </router-link>
         </div>
       </div>
-      <!-- /.card-header -->
       <div class="card-body">
         <div class="table-responsive" v-if="Categories">
           <table class="table">
@@ -145,7 +144,7 @@
                       <button
                         type="submit"
                         class="dropdown-item text-danger"
-                        @click.prevent="remove(Category.id)"
+                        @click.prevent="deleteItem(Category.id)"
                       >
                         <i class="bx bx-trash me-1"></i>
                         Delete
@@ -164,6 +163,7 @@
       <!-- /.card-body -->
       <div class="card-footer clearfix" v-if="Categories">
         <paginate
+          v-model="current_page"
           :page-count="total"
           :click-handler="paginationHandler"
           :prev-text="'<i class=\'tf-icon bx bx-chevrons-left\'></i>'"
@@ -189,6 +189,7 @@ export default {
   data() {
     return {
       total: 1,
+      current_page: 1,
       selected: [],
       selectedAll: false,
       isSelected: false,
@@ -228,7 +229,7 @@ export default {
     fileLink: function (name) {
       return "/storage/category/thumbs/" + name;
     },
-    remove(id) {
+    deleteItem(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -242,7 +243,7 @@ export default {
           axios
             .delete("/api/category/" + id)
             .then(() => {
-              this.$store.dispatch("category/getPaginate", 1);
+              this.paginationHandler(this.current_page);
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             })
             .catch((error) => {
@@ -263,21 +264,19 @@ export default {
       }
     },
 
-    removeitems: function (selected) {
+    bulkDelete: function (selected) {
       axios
-        .post("/categories/remove-items", { ids: selected })
+        .post("/api/category/bulkdelete", { ids: selected })
         .then((response) => {
           Swal.fire(
             "Deleted!",
-            response.data.total +
-              " " +
-              "Category has been deleted Successfully !.",
+            response.data + " " + "Category has been deleted Successfully !.",
             "success"
           );
-          this.selected = [];
-          this.selectAll = false;
-          this.isSelected = false;
-          this.$store.dispatch("getCategories");
+          //this.selected = [];
+          //this.selectAll = false;
+          //this.isSelected = false;
+          this.paginationHandler(this.current_page);
         })
         .catch((error) => {
           console.log(error);
@@ -286,17 +285,14 @@ export default {
     ChangeStatus: function (selected, status) {
       let msg = status === 1 ? "Active" : "Inactive";
       axios
-        .post("/categories/Change-Status-Active", {
+        .post("/api/category/changestatus", {
           ids: selected,
           status: status,
         })
         .then((response) => {
-          Swal.fire(
-            response.data.total + "  Category has been  Successfully " + msg
-          );
+          Swal.fire(response.data + "  Category has been  Successfully " + msg);
           this.$store.dispatch("category/getPaginate", 1);
           this.selected = [];
-          //this.selectAll = false;
         });
     },
   },

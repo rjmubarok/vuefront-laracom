@@ -60,7 +60,7 @@ export default {
   methods: {
     addCategory: function () {
       this.form
-        .post("/api/category/createBulk")
+        .post("/api/category/bulkcreate")
         .then((response) => {
           Swal.fire({
             position: "top",
@@ -70,7 +70,7 @@ export default {
             timer: 1500,
           });
           this.form.name = null;
-          //this.$router.push("/admin/category");
+          this.$router.push("/admin/category");
         })
         .catch((err) => {
           console.log(err);
