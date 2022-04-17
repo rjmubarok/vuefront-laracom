@@ -26,7 +26,9 @@ Route::post('/register', [UserController::class, 'register']);
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/all/{id}', [CategoryController::class, 'getAll']);
 Route::get('/category/{category}', [CategoryController::class, 'show']);
-Route::get('/brands', [BrandController::class, 'index']);
+Route::get('/brand', [BrandController::class, 'index']);
+Route::get('/brand/all/{id}', [CategoryController::class, 'getAll']);
+Route::get('/brand/{brand}', [BrandController::class, 'show']);
 Route::get('/orders', [OrderController::class, 'index']);
 
 /**** End Public Routes ****/
@@ -52,9 +54,17 @@ Route::middleware('auth:sanctum')->group(function () {
   });
 
   //brand routes
-  Route::post('brand', [BrandController::class, 'store'])->middleware('permission:create-brand');
-  Route::put('brand/{brand}', [BrandController::class, 'update'])->middleware('permission:update-brand');
-  Route::delete('brand/{brand}', [BrandController::class, 'destroy'])->middleware('permission:delete-brand');
+  Route::prefix('brand')->controller(BrandController::class)->group(function () {
+    Route::post('/', 'store')->middleware('permission:create-brand');
+    Route::post('bulkcreate', 'bulkcreate')->middleware('permission:create-brand');
+    Route::put('{brand}', 'update')->middleware('permission:update-brand');
+    Route::delete('{brand}', 'destroy')->middleware('permission:delete-brand');
+    Route::post('bulkdelete', 'bulkdelete')->middleware('permission:delete-brand');
+    Route::post('changestatus', 'changestatus')->middleware('permission:update-brand');
+  });
+//   Route::post('brand', [BrandController::class, 'store'])->middleware('permission:create-brand');
+//   Route::put('brand/{brand}', [BrandController::class, 'update'])->middleware('permission:update-brand');
+//   Route::delete('brand/{brand}', [BrandController::class, 'destroy'])->middleware('permission:delete-brand');
 
   // vendor route
   Route::post('vendor', [VendorController::class, 'store'])->middleware('permission:create-vendor');

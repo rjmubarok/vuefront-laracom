@@ -112,6 +112,12 @@
               Category
             </a>
           </router-link>
+          <router-link tag="li" to="/admin/brand" class="menu-item">
+            <a class="menu-link">
+              <i class="menu-icon tf-icons bx bx-layout"></i>
+              Brand
+            </a>
+          </router-link>
         </ul>
       </aside>
 

@@ -7,6 +7,7 @@ import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 import Dashboard from "./views/admin/Dashboard";
 import categoryRoutes from "./views/admin/category/router";
+import BrandRoutes from "./views/admin/brand/router";
 
 Vue.use(VueRouter);
 let routes = [
@@ -23,7 +24,7 @@ let routes = [
         name: "Dashboard",
     },
 ];
-routes = routes.concat(categoryRoutes);
+routes = routes.concat(categoryRoutes, BrandRoutes);
 const router = new VueRouter({
     mode: "history",
     linkActiveClass: "active",
